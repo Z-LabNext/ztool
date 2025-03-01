@@ -14,13 +14,13 @@
 
 ```bash
 # npm安装
-$ npm i @zLabNext/ztool -S
+$ npm i @zlabnext/ztool -S
 
 # yarn安装
-$ yarn add @zLabNext/ztool -S
+$ yarn add @zlabnext/ztool -S
 
 # pnpm安装
-$ pnpm add @zLabNext/ztool -S
+$ pnpm add @zlabnext/ztool -S
 ```
 
 ## API

@@ -1,7 +1,10 @@
 {
-  "name": "@zLabNext/ztool",
+  "name": "@zlabnext/ztool",
   "version": "1.0.0",
   "description": "",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "vitest",
     "build": "vite build",

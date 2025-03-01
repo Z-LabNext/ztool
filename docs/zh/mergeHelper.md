@@ -15,7 +15,7 @@
 ![capture-1740817031905.png](https://s2.loli.net/2025/03/01/mxlb8P6JvyASqa4.png)
 
 ```js
-import { getMergedData, Mode, getFieldSpan } from '@zLabNext/ztool';
+import { getMergedData, Mode, getFieldSpan } from '@zlabnext/ztool';
 
 const dataSource = [
   {
@@ -98,7 +98,7 @@ function spanMethod({ row, column }) {
 ![capture-1740817051358.png](https://s2.loli.net/2025/03/01/xoI12bhTt8lwUCy.png)
 
 ```js
-import { getMergedData, Mode, getFieldSpan } from '@zLabNext/ztool';
+import { getMergedData, Mode, getFieldSpan } from '@zlabnext/ztool';
 
 const columns = [
   { prop: 'name', label: '姓名' },
@@ -204,7 +204,7 @@ const spanMethod = ({ row, column, columnIndex }) => {
 - 示例代码
 
 ```js
-import { CellMerger, Mode } from '@zLabNext/ztool';
+import { CellMerger, Mode } from '@zlabnext/ztool';
 
 // 属性配置
 const options = {
@@ -248,7 +248,7 @@ const mergedData = cellMerger.getMergedData();
 - 示例代码
 
 ```js
-import { Mode } from '@zLabNext/ztool';
+import { Mode } from '@zlabnext/ztool';
 
 const mode = Mode.Row;
 ```
@@ -329,7 +329,7 @@ const columns = [
 - 示例代码
 
 ```js
-import { getMergedData, Mode } from '@zLabNext/ztool';
+import { getMergedData, Mode } from '@zlabnext/ztool';
 
 // 属性配置
 const options = {
@@ -375,7 +375,7 @@ const mergeData = getMergedData(options);
 - 示例代码
 
 ```js
-import { getFieldSpan } from '@zLabNext/ztool';
+import { getFieldSpan } from '@zlabnext/ztool';
 
 const spanMethod = ({ row, columnIndex }) => {
   if (columnIndex === 0) {
@@ -411,7 +411,7 @@ const spanMethod = ({ row, columnIndex }) => {
 - 示例代码
 
 ```js
-import { splitIntoFragments } from '@zLabNext/ztool';
+import { splitIntoFragments } from '@zlabnext/ztool';
 
 const result = splitIntoFragments({
   mode: Mode.Row,
@@ -479,7 +479,7 @@ const result = splitIntoFragments({
 - 示例代码
 
 ```js
-import { getSortNo } from '@zLabNext/ztool';
+import { getSortNo } from '@zlabnext/ztool';
 ```
 
 ```html

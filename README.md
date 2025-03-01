@@ -14,13 +14,13 @@ A js tool library
 
 ```bash
 # npm
-$ npm i @zLabNext/ztool -S
+$ npm i @zlabnext/ztool -S
 
 # yarn
-$ yarn add @zLabNext/ztool -S
+$ yarn add @zlabnext/ztool -S
 
 # pnpm
-$ pnpm add @zLabNext/ztool -S
+$ pnpm add @zlabnext/ztool -S
 ```
 
 ## API

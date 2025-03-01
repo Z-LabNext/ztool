@@ -15,7 +15,7 @@ Helps you easily handle "cell merging" in tables.
 ![capture-1740817082040.png](https://s2.loli.net/2025/03/01/hT2ZmlvECi4xWpj.png)
 
 ```js
-import { getMergedData, Mode, getFieldSpan } from '@zLabNext/ztool';
+import { getMergedData, Mode, getFieldSpan } from '@zlabnext/ztool';
 
 const dataSource = [
   {
@@ -98,7 +98,7 @@ function spanMethod({ row, column }) {
 ![capture-1740817073222.png](https://s2.loli.net/2025/03/01/7o2zNxwduamXMkI.png)
 
 ```js
-import { getMergedData, Mode, getFieldSpan } from '@zLabNext/ztool';
+import { getMergedData, Mode, getFieldSpan } from '@zlabnext/ztool';
 
 const columns = [
   { prop: 'name', label: 'Name' },
@@ -204,7 +204,7 @@ Utility class for cell merging
 - Example Code
 
 ```js
-import { CellMerger, Mode } from '@zLabNext/ztool';
+import { CellMerger, Mode } from '@zlabnext/ztool';
 
 // Property configuration
 const options = {
@@ -248,7 +248,7 @@ Merging Mode
 - Example Code
 
 ```js
-import { Mode } from '@zLabNext/ztool';
+import { Mode } from '@zlabnext/ztool';
 
 const mode = Mode.Row;
 ```
@@ -329,7 +329,7 @@ Same as [CellMerger](#cellmerger)
 - Example Code
 
 ```js
-import { getMergedData, Mode } from '@zLabNext/ztool';
+import { getMergedData, Mode } from '@zlabnext/ztool';
 
 // Property configuration
 const options = {
@@ -375,7 +375,7 @@ Get field merging configuration, e.g., for handling `spanMethod` in [Element UI 
 - Example Code
 
 ```js
-import { getFieldSpan } from '@zLabNext/ztool';
+import { getFieldSpan } from '@zlabnext/ztool';
 
 const spanMethod = ({ row, columnIndex }) => {
   if (columnIndex === 0) {
@@ -411,7 +411,7 @@ Other properties are the same as [CellMerger](#cellmerger)
 - Example Code
 
 ```js
-import { splitIntoFragments } from '@zLabNext/ztool';
+import { splitIntoFragments } from '@zlabnext/ztool';
 
 const result = splitIntoFragments({
   mode: Mode.Row,
@@ -479,7 +479,7 @@ Get sequence number, used in "row" merging.
 - Example Code
 
 ```js
-import { getSortNo } from '@zLabNext/ztool';
+import { getSortNo } from '@zlabnext/ztool';
 ```
 
 ```html

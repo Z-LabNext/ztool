@@ -60,7 +60,7 @@ export interface GetLabelOptions {
 - Example Code
 
 ```js
-import { Option } from '@zLabNext/ztool';
+import { Option } from '@zlabnext/ztool';
 
 const dataSource = [
   {
@@ -115,7 +115,7 @@ Replace Empty Values
 - Example Code
 
 ```js
-import { replaceEmpty } from '@zLabNext/ztool';
+import { replaceEmpty } from '@zlabnext/ztool';
 
 console.log(replaceEmpty(null)); // --
 console.log(replaceEmpty(undefined)); // --
@@ -154,7 +154,7 @@ Download File
 - Example
 
 ```js
-import { downloadFileV2 } from '@zLabNext/ztool';
+import { downloadFileV2 } from '@zlabnext/ztool';
 
 /* Download using file stream, typically returned from an API (e.g., Excel export) */
 // const str = 'The way is vast, it can go left or right.';
@@ -193,7 +193,7 @@ Random RGB Color Value
 - Example Code
 
 ```js
-import { getRandomRgb } from '@zLabNext/ztool';
+import { getRandomRgb } from '@zlabnext/ztool';
 
 console.log(getRandomRgb()); // Returns a random RGB color, e.g., rgb(0, 0, 0)
 ```
@@ -205,7 +205,7 @@ Random HEX Color Value
 - Example Code
 
 ```js
-import { getRandomHex } from '@zLabNext/ztool';
+import { getRandomHex } from '@zlabnext/ztool';
 
 console.log(getRandomHex()); // Returns a random HEX color, e.g., #000000
 ```
@@ -217,7 +217,7 @@ Random RGB/HEX Color Value
 - Example Code
 
 ```js
-import { getRandomColor } from '@zLabNext/ztool';
+import { getRandomColor } from '@zlabnext/ztool';
 
 console.log(getRandomColor({ type: 'rgb' })); // Returns a random RGB color, e.g., rgb(0, 0, 0)
 console.log(getRandomColor({ type: 'hex' })); // Returns a random HEX color, e.g., #000000
@@ -241,7 +241,7 @@ Convert Image to WebP Format
 - Example Code
 
 ```js
-import { convert2Webp, downloadArrayBuffer } from '@zLabNext/ztool';
+import { convert2Webp, downloadArrayBuffer } from '@zlabnext/ztool';
 
 // `file` is a File object
 const webpBlob = convert2Webp(file, 0.6);
@@ -266,7 +266,7 @@ Get Filename and Extension from URL
 - Example Code
 
 ```js
-import { getFilenameFromUrl } from '@zLabNext/ztool';
+import { getFilenameFromUrl } from '@zlabnext/ztool';
 
 const url = 'https://www.baidu.com/abc.jpg';
 getFilenameFromUrl(url); // abc.jpg
@@ -291,7 +291,7 @@ Get Filename and Extension from Content-Disposition
 - Example Code
 
 ```js
-import { getFilenameFromDisposition } from '@zLabNext/ztool';
+import { getFilenameFromDisposition } from '@zlabnext/ztool';
 
 console.log(getFilenameFromDisposition('attachment; filename="example.txt"')); // 'example.txt'
 console.log(getFilenameFromDisposition('attachment; filename=example.txt')); // 'example.txt'
@@ -328,7 +328,7 @@ Split Date Range, typically used for submission to the backend.
 - Example Code
 
 ```js
-import { splitDateRange } from '@zLabNext/ztool';
+import { splitDateRange } from '@zlabnext/ztool';
 
 const result = splitDateRange({
   dateRange: ['2024-11-13', '2024-11-14'],
@@ -356,7 +356,7 @@ Combine Date Range, typically used for frontend display.
 - Example Code
 
 ```js
-import { combineDateRange } from '@zLabNext/ztool';
+import { combineDateRange } from '@zlabnext/ztool';
 
 const result = combineDateRange({
   obj: { startDate: '2024-11-13', endDate: '2024-11-14' },
@@ -387,7 +387,7 @@ Format Address String
 - Example Code
 
 ```js
-import { fmtAddressStr } from '@zLabNext/ztool';
+import { fmtAddressStr } from '@zlabnext/ztool';
 
 const result = fmtAddressStr({
   addressStr: 'Shandong Province,Qingdao City,Laoshan District',

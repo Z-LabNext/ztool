@@ -60,7 +60,7 @@ export interface GetLabelOptions {
 - 示例代码
 
 ```js
-import { Option } from '@zLabNext/ztool';
+import { Option } from '@zlabnext/ztool';
 
 const dataSource = [
   {
@@ -115,7 +115,7 @@ option.update({dataSource: []})
 - 示例代码
 
 ```js
-import { replaceEmpty } from '@zLabNext/ztool';
+import { replaceEmpty } from '@zlabnext/ztool';
 
 console.log(replaceEmpty(null)); // --
 console.log(replaceEmpty(undefined)); // --
@@ -154,7 +154,7 @@ options
 - 示例
 
 ```js
-import { downloadFileV2 } from '@zLabNext/ztool';
+import { downloadFileV2 } from '@zlabnext/ztool';
 
 /* 根据文件流进行下载，文件流一般从接口返回(例如excel导出) */
 // const str = '大道泛兮，其可左右。';
@@ -193,7 +193,7 @@ downloadFileV2({
 - 示例代码
 
 ```js
-import { getRandomRgb } from '@zLabNext/ztool';
+import { getRandomRgb } from '@zlabnext/ztool';
 
 console.log(getRandomRgb()); // 获取一个随机的rgb色值，例：rgb(0, 0, 0)
 ```
@@ -205,7 +205,7 @@ console.log(getRandomRgb()); // 获取一个随机的rgb色值，例：rgb(0, 0,
 - 示例代码
 
 ```js
-import { getRandomHex } from '@zLabNext/ztool';
+import { getRandomHex } from '@zlabnext/ztool';
 
 console.log(getRandomHex()); // 获取一个随机的hex色值，例：#000000
 ```
@@ -217,7 +217,7 @@ console.log(getRandomHex()); // 获取一个随机的hex色值，例：#000000
 - 示例代码
 
 ```js
-import { getRandomColor } from '@zLabNext/ztool';
+import { getRandomColor } from '@zlabnext/ztool';
 
 console.log(getRandomColor({ type: 'rgb' })); // 获取一个随机的rgb色值，例：rgb(0, 0, 0)
 console.log(getRandomColor({ type: 'hex' })); // 获取一个随机的hex色值，例：#000000
@@ -241,7 +241,7 @@ console.log(getRandomColor({ type: 'hex' })); // 获取一个随机的hex色值�
 - 示例代码
 
 ```js
-import { convert2Webp, downloadArrayBuffer } from '@zLabNext/ztool';
+import { convert2Webp, downloadArrayBuffer } from '@zlabnext/ztool';
 
 // file是文件对象
 const webpBlob = convert2Webp(file, 0.6);
@@ -266,7 +266,7 @@ downloadArrayBuffer(webpBlob, 'example.webp');
 - 示例代码
 
 ```js
-import { getFilenameFromUrl } from '@zLabNext/ztool';
+import { getFilenameFromUrl } from '@zlabnext/ztool';
 
 const url = 'https://www.baidu.com/abc.jpg';
 getFilenameFromUrl(url); // abc.jpg
@@ -291,7 +291,7 @@ getFilenameFromUrl(url); // abc.jpg
 - 示例代码
 
 ```js
-import { getFilenameFromDisposition } from '@zLabNext/ztool';
+import { getFilenameFromDisposition } from '@zlabnext/ztool';
 
 console.log(getFilenameFromDisposition('attachment; filename="example.txt"')); // 'example.txt'
 console.log(getFilenameFromDisposition('attachment; filename=example.txt')); // 'example.txt'
@@ -328,7 +328,7 @@ console.log(getFilenameFromDisposition(null)); // null
 - 示例代码
 
 ```js
-import { splitDateRange } from '@zLabNext/ztool';
+import { splitDateRange } from '@zlabnext/ztool';
 
 const result = splitDateRange({
   dateRange: ['2024-11-13', '2024-11-14'],
@@ -356,7 +356,7 @@ console.log(result); // { startDate: '2024-11-13', endDate: '2024-11-14' }
 - 示例代码
 
 ```js
-import { combineDateRange } from '@zLabNext/ztool';
+import { combineDateRange } from '@zlabnext/ztool';
 
 const result = combineDateRange({
   obj: { startDate: '2024-11-13', endDate: '2024-11-14' },
@@ -387,7 +387,7 @@ console.log(result); // ['2024-11-13', '2024-11-14']
 - 示例代码
 
 ```js
-import { fmtAddressStr } from '@zLabNext/ztool';
+import { fmtAddressStr } from '@zlabnext/ztool';
 
 const result = fmtAddressStr({
   addressStr: '山东省,青岛市,崂山区',
