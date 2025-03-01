@@ -185,21 +185,21 @@ Utility class for cell merging
 
 - `options` Properties
 
-| Name                        | Type      | Required | Default | Description                                                      |
-|-----------------------------|-----------|----------|---------|------------------------------------------------------------------|
-| dataSource                  | `Array`   | Yes      |         | Data source                                                     |
-| [mergeFields](#mergefields) | `Array`   | Yes      |         | Fields to perform "row merging"                                 |
-| genSort                     | `boolean` | No       |         | Whether to generate sequence numbers after "row merging"        |
-| sortBy                      | `string`  | No       |         | Sort by this field (defaults to the first item in mergeFields)  |
-| [mode](#mode)               | `number`  | Yes      |         | Merging mode                                                    |
-| [columns](#columns)         | `Array`   | No       |         | Column headers                                                  |
+| Name                        | Type      | Required | Default | Description                                                        |
+| --------------------------- | --------- | -------- | ------- | ------------------------------------------------------------------ |
+| dataSource                  | `Array`   | Yes      |         | Data source                                                        |
+| [mergeFields](#mergefields) | `Array`   | Yes      |         | Fields to perform "row merging"                                    |
+| genSort                     | `boolean` | No       |         | Whether to generate sequence numbers after "row merging"           |
+| sortBy                      | `string`  | No       |         | Sort by this field (defaults to the first item in mergeFields)     |
+| [mode](#mode)               | `number`  | Yes      |         | Merging mode                                                       |
+| [columns](#columns)         | `Array`   | No       |         | Column headers                                                     |
 | reCalc                      | `boolean` | No       | false   | Whether to recalculate merging (e.g., after dynamic table updates) |
 
 - Instance Methods
 
-| Name          | Parameters | Description                |
-|---------------|------------|----------------------------|
-| getMergedData | --         | Get merged data            |
+| Name          | Parameters | Description     |
+| ------------- | ---------- | --------------- |
+| getMergedData | --         | Get merged data |
 
 - Example Code
 
@@ -239,10 +239,10 @@ Merging Mode
 
 - Properties
 
-| Name       | Type         | Value | Description                                                       |
-|------------|--------------|-------|-------------------------------------------------------------------|
-| Row        | `number`     | 0     | Merge rows                                                       |
-| Col        | `number`     | 1     | Merge columns                                                    |
+| Name       | Type         | Value | Description                                                                                    |
+| ---------- | ------------ | ----- | ---------------------------------------------------------------------------------------------- |
+| Row        | `number`     | 0     | Merge rows                                                                                     |
+| Col        | `number`     | 1     | Merge columns                                                                                  |
 | ~~RowCol~~ | ~~`number`~~ | ~~2~~ | ~~Merge rows and columns (deprecated)~~ :rotating_light: Poor display effect, hence deprecated |
 
 - Example Code
@@ -263,10 +263,10 @@ When performing "column" merging, all column props must be passed.
 
 - `item` Properties
 
-| Name     | Type       | Required | Description                        |
-|----------|------------|----------|------------------------------------|
-| field    | `string`   | Yes      | Field name                        |
-| callback | `Function` | Yes      | Custom logic for "row merging"    |
+| Name     | Type       | Required | Description                    |
+| -------- | ---------- | -------- | ------------------------------ |
+| field    | `string`   | Yes      | Field name                     |
+| callback | `Function` | Yes      | Custom logic for "row merging" |
 
 - Example Code
 
@@ -294,9 +294,9 @@ Define column array, typically used in "column" merging.
 
 - `item` Properties
 
-| Name | Type     | Required | Description   |
-|------|----------|----------|---------------|
-| prop | `string` | Yes      | Column field  |
+| Name | Type     | Required | Description  |
+| ---- | -------- | -------- | ------------ |
+| prop | `string` | Yes      | Column field |
 
 - Example Code
 
@@ -368,8 +368,8 @@ Get field merging configuration, e.g., for handling `spanMethod` in [Element UI 
 - Parameters
 
 | Name  | Type     | Required | Description                |
-|-------|----------|----------|----------------------------|
-| row   | `Object` | Yes      | Row data                  |
+| ----- | -------- | -------- | -------------------------- |
+| row   | `Object` | Yes      | Row data                   |
 | field | `string` | Yes      | Target field's merged data |
 
 - Example Code
@@ -400,8 +400,8 @@ Split data into a 2D array, typically used for paginated PDF printing.
 
 - `options` Properties
 
-| Name     | Type     | Required | Description        |
-|----------|----------|----------|---------------------|
+| Name     | Type     | Required | Description                 |
+| -------- | -------- | -------- | --------------------------- |
 | pageSize | `number` | Yes      | Number of items per segment |
 
 ::: tip
@@ -472,9 +472,9 @@ Get sequence number, used in "row" merging.
 
 - Parameters
 
-| Name | Type     | Required | Description   |
-|------|----------|----------|---------------|
-| row  | `Object` | Yes      | Row data      |
+| Name | Type     | Required | Description |
+| ---- | -------- | -------- | ----------- |
+| row  | `Object` | Yes      | Row data    |
 
 - Example Code
 

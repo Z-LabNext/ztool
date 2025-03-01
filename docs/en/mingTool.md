@@ -28,17 +28,17 @@ Public Dropdown Options
 
 - `options` Properties
 
-| Field       | Type     | Default                                 | Description         |
-|------------|----------|-----------------------------------------|--------------------|
-| dataSource | `Array`  | -                                       | Data source        |
+| Field      | Type     | Default                              | Description         |
+| ---------- | -------- | ------------------------------------ | ------------------- |
+| dataSource | `Array`  | -                                    | Data source         |
 | fieldsName | `Object` | `{ label: 'label', value: 'value' }` | Option field config |
 
 - Instance Methods
 
-| Name     | Parameters        | Return | Description         |
-|----------|-------------------|--------|---------------------|
+| Name     | Parameters        | Return | Description            |
+| -------- | ----------------- | ------ | ---------------------- |
 | update   | `Same as options` | -      | Update with new config |
-| getLabel | `GetLabelOptions` | -      | Get label value     |
+| getLabel | `GetLabelOptions` | -      | Get label value        |
 
 ```ts
 export interface GetLabelOptions {
@@ -107,9 +107,9 @@ Replace Empty Values
 
 - Parameters
 
-| Field      | Type      | Default | Description         |
-|------------|-----------|---------|---------------------|
-| value      | `unknown` | -       | Original value      |
+| Field      | Type      | Default | Description                  |
+| ---------- | --------- | ------- | ---------------------------- |
+| value      | `unknown` | -       | Original value               |
 | replaceStr | `string`  | `--`    | Placeholder for empty values |
 
 - Example Code
@@ -145,11 +145,11 @@ Download File
 
 `options`
 
-| Field      | Type                   | Default | Description                              |
-|------------|------------------------|---------|------------------------------------------|
-| type       | `string`               | -       | Input type (`'url'`, `'arrayBuffer'`)    |
-| filename   | `string`               | -       | File name                                |
-| dataSource | `string / ArrayBuffer` | -       | File URL or ArrayBuffer                  |
+| Field      | Type                   | Default | Description                           |
+| ---------- | ---------------------- | ------- | ------------------------------------- |
+| type       | `string`               | -       | Input type (`'url'`, `'arrayBuffer'`) |
+| filename   | `string`               | -       | File name                             |
+| dataSource | `string / ArrayBuffer` | -       | File URL or ArrayBuffer               |
 
 - Example
 
@@ -233,10 +233,10 @@ Convert Image to WebP Format
 
 - Parameters
 
-| Field   | Type           | Default | Description              |
-|---------|----------------|---------|--------------------------|
-| file    | `File \| Blob` | -       | File object              |
-| quality | `number`       | -       | Compression rate (0~1)   |
+| Field   | Type           | Default | Description            |
+| ------- | -------------- | ------- | ---------------------- |
+| file    | `File \| Blob` | -       | File object            |
+| quality | `number`       | -       | Compression rate (0~1) |
 
 - Example Code
 
@@ -259,9 +259,9 @@ Get Filename and Extension from URL
 
 - Parameters
 
-| Field | Type     | Default | Description   |
-|-------|----------|---------|---------------|
-| url   | `string` | -       | File URL      |
+| Field | Type     | Default | Description |
+| ----- | -------- | ------- | ----------- |
+| url   | `string` | -       | File URL    |
 
 - Example Code
 
@@ -282,11 +282,11 @@ Get Filename and Extension from Content-Disposition
 
 - Parameters
 
-| Field             | Type       | Default              | Description           |
-|-------------------|------------|----------------------|-----------------------|
-| contentDisposition| `string`   | -                    | Response header value |
-| decode            | `boolean`  | `true`               | Whether to decode     |
-| decodeCallback    | `function` | `decodeURIComponent` | Decode callback       |
+| Field              | Type       | Default              | Description           |
+| ------------------ | ---------- | -------------------- | --------------------- |
+| contentDisposition | `string`   | -                    | Response header value |
+| decode             | `boolean`  | `true`               | Whether to decode     |
+| decodeCallback     | `function` | `decodeURIComponent` | Decode callback       |
 
 - Example Code
 
@@ -318,12 +318,12 @@ Split Date Range, typically used for submission to the backend.
 
 - `options` Properties
 
-| Field         | Type             | Required | Default      | Description               |
-|---------------|------------------|----------|--------------|---------------------------|
-| dateRange     | `string[]`       | Yes      | -            | Date range                |
-| outStartField | `string`         | No       | startDate    | Output start date field   |
-| outEndField   | `string`         | No       | endDate      | Output end date field     |
-| defaultValue  | `string \| null` | No       | null         | Default value             |
+| Field         | Type             | Required | Default   | Description             |
+| ------------- | ---------------- | -------- | --------- | ----------------------- |
+| dateRange     | `string[]`       | Yes      | -         | Date range              |
+| outStartField | `string`         | No       | startDate | Output start date field |
+| outEndField   | `string`         | No       | endDate   | Output end date field   |
+| defaultValue  | `string \| null` | No       | null      | Default value           |
 
 - Example Code
 
@@ -347,11 +347,11 @@ Combine Date Range, typically used for frontend display.
 
 - `options` Properties
 
-| Field        | Type                             | Required | Default      | Description               |
-|--------------|----------------------------------|----------|--------------|---------------------------|
-| obj          | `Record<string, string \| null>` | Yes      | -            | Object parameter          |
-| inStartField | `string`                         | No       | startDate    | Input start date field    |
-| inEndField   | `string`                         | No       | endDate      | Input end date field      |
+| Field        | Type                             | Required | Default   | Description            |
+| ------------ | -------------------------------- | -------- | --------- | ---------------------- |
+| obj          | `Record<string, string \| null>` | Yes      | -         | Object parameter       |
+| inStartField | `string`                         | No       | startDate | Input start date field |
+| inEndField   | `string`                         | No       | endDate   | Input end date field   |
 
 - Example Code
 
@@ -375,14 +375,14 @@ Format Address String
 
 - `options` Properties
 
-| Field       | Type       | Required | Default | Description                           |
-|-------------|------------|----------|---------|---------------------------------------|
-| addressStr  | `string`   | Yes      | -       | Original address string               |
-| needSplit   | `boolean`  | No       | true    | Whether to split                      |
-| splitFlag   | `boolean`  | No       | true    | Split separator                       |
-| needJoin    | `boolean`  | No       | true    | Whether to join                       |
-| joinFlag    | `string`   | No       | ,       | Join separator                        |
-| extraStrArr | `string[]` | No       |         | Extra string array (e.g., details)    |
+| Field       | Type       | Required | Default | Description                        |
+| ----------- | ---------- | -------- | ------- | ---------------------------------- |
+| addressStr  | `string`   | Yes      | -       | Original address string            |
+| needSplit   | `boolean`  | No       | true    | Whether to split                   |
+| splitFlag   | `boolean`  | No       | true    | Split separator                    |
+| needJoin    | `boolean`  | No       | true    | Whether to join                    |
+| joinFlag    | `string`   | No       | ,       | Join separator                     |
+| extraStrArr | `string[]` | No       |         | Extra string array (e.g., details) |
 
 - Example Code
 

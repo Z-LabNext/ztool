@@ -1,214 +1,238 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-plus/dist/index.css"
+    />
+    <style type="text/css">
+      .discord {
+        text-decoration: line-through;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
-  <style type="text/css">
-    .discord {
-      text-decoration: line-through;
-    }
+      .toolbar {
+        margin-left: 20px;
+      }
 
-    .toolbar {
-      margin-left: 20px;
-    }
+      .tableWrap {
+        padding: 10px;
+      }
 
-    .tableWrap {
-      padding: 10px;
-    }
+      .tableCard {
+        padding: 10px;
+      }
+    </style>
+  </head>
 
-    .tableCard {
-      padding: 10px;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="app">
-    <el-space class="toolbar">
-      <el-button type="success" @click="handleCapture">下载截图</el-button>
-      <el-button @click="handleReCalc">重新计算</el-button>
-      <el-radio-group v-model="mode" @change="getTableData">
-        <el-radio :label="Mode.Row" size="large">行</el-radio>
-        <el-radio :label="Mode.Col" size="large">列</el-radio>
-        <el-radio class="discord" :label="Mode.RowCol" size="large">行 + 列 (废弃)</el-radio>
-      </el-radio-group>
-    </el-space>
-    <div class="tableWrap" ref="tableWrap">
-      <div class="tableCard">
-        <el-table row-key="id" :data="tableData" style="width: 100%" :span-method="spanMethod" border>
-          <el-table-column v-if="mode === Mode.Col" label="序号" type="index" width="80" align="center"></el-table-column>
-          <el-table-column v-else label="序号" width="80" align="center">
-            <template #default="{ row }"> {{ getSortNo(row) }} </template>
-          </el-table-column>
-          <el-table-column v-for="item in columns" :prop="item.prop" :label="item.label"
-            align="center"></el-table-column>
-          <el-table-column label="操作" align="center" v-if="!capturing">
-            <template #default="{ row, $index }">
-              <el-button @click="handleDel($index)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+  <body>
+    <div id="app">
+      <el-space class="toolbar">
+        <el-button type="success" @click="handleCapture">下载截图</el-button>
+        <el-button @click="handleReCalc">重新计算</el-button>
+        <el-radio-group v-model="mode" @change="getTableData">
+          <el-radio :label="Mode.Row" size="large">行</el-radio>
+          <el-radio :label="Mode.Col" size="large">列</el-radio>
+          <el-radio class="discord" :label="Mode.RowCol" size="large"
+            >行 + 列 (废弃)</el-radio
+          >
+        </el-radio-group>
+      </el-space>
+      <div class="tableWrap" ref="tableWrap">
+        <div class="tableCard">
+          <el-table
+            row-key="id"
+            :data="tableData"
+            style="width: 100%"
+            :span-method="spanMethod"
+            border
+          >
+            <el-table-column
+              v-if="mode === Mode.Col"
+              label="序号"
+              type="index"
+              width="80"
+              align="center"
+            ></el-table-column>
+            <el-table-column v-else label="序号" width="80" align="center">
+              <template #default="{ row }"> {{ getSortNo(row) }} </template>
+            </el-table-column>
+            <el-table-column
+              v-for="item in columns"
+              :prop="item.prop"
+              :label="item.label"
+              align="center"
+            ></el-table-column>
+            <el-table-column label="操作" align="center" v-if="!capturing">
+              <template #default="{ row, $index }">
+                <el-button @click="handleDel($index)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://unpkg.com/vue@3"></script>
-  <script src="https://unpkg.com/element-plus"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-    integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script type="module">
-    import * as mergeHelper from '../../dist/es/ztool.min.js';
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/element-plus"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="module">
+      import * as mergeHelper from '../../dist/es/ztool.min.js';
 
-    const { createApp, ref, onMounted, nextTick } = Vue;
-    const { Mode, getMergedData, getFieldSpan, constants, getSortNo } =
-      mergeHelper;
-    const app = createApp({
-      setup() {
-        const mode = ref(Mode.Row);
-        const columns = ref([]);
-        const tableData = ref([]);
-        const tableWrap = ref();
-        const mergeFields = [
-          {
-            field: 'name',
-            callback(curItem, nextItem) {
-              return curItem.name === nextItem.name;
+      const { createApp, ref, onMounted, nextTick } = Vue;
+      const { Mode, getMergedData, getFieldSpan, constants, getSortNo } =
+        mergeHelper;
+      const app = createApp({
+        setup() {
+          const mode = ref(Mode.Row);
+          const columns = ref([]);
+          const tableData = ref([]);
+          const tableWrap = ref();
+          const mergeFields = [
+            {
+              field: 'name',
+              callback(curItem, nextItem) {
+                return curItem.name === nextItem.name;
+              },
             },
-          },
-          'residential',
-          'register',
-          'date',
-        ];
+            'residential',
+            'register',
+            'date',
+          ];
 
-        /**
-         * 获取表格数据
-         */
-        const getTableData = async () => {
-          const { columns: newColumns, dataSource } = await fetch(
-            './data.json',
-          ).then((res) => res.json());
-          columns.value = newColumns;
-          const options = {
-            mode: mode.value,
-            columns: columns.value,
-            dataSource,
-            mergeFields,
-            genSort: true,
+          /**
+           * 获取表格数据
+           */
+          const getTableData = async () => {
+            const { columns: newColumns, dataSource } = await fetch(
+              './data.json',
+            ).then((res) => res.json());
+            columns.value = newColumns;
+            const options = {
+              mode: mode.value,
+              columns: columns.value,
+              dataSource,
+              mergeFields,
+              genSort: true,
+            };
+            if ([Mode.Col, Mode.RowCol].includes(mode.value)) {
+              options.columns = columns.value.map((item) => ({
+                prop: item.prop,
+              }));
+              options.mergeFields = columns.value.map((item) => item.prop);
+            }
+            if (mode.value === Mode.Col) {
+              delete options.genSort;
+            }
+            const mergedData = getMergedData(options);
+            tableData.value = mergedData;
           };
-          if ([Mode.Col, Mode.RowCol].includes(mode.value)) {
-            options.columns = columns.value.map((item) => ({
-              prop: item.prop,
-            }));
-            options.mergeFields = columns.value.map((item) => item.prop);
-          }
-          if (mode.value === Mode.Col) {
-            delete options.genSort;
-          }
-          const mergedData = getMergedData(options);
-          tableData.value = mergedData;
-        };
 
-        /**
-         * 合并单元格
-         */
-        const spanMethod = ({ row, column, columnIndex }) => {
-          if (columnIndex === 0) {
-            return mode.value === Mode.Col
-              ? { rowspan: 1, colspan: 1 }
-              : getFieldSpan(row, 'name');
-          }
-          return getFieldSpan(row, column.property);
-        };
-
-        const capturing = ref(false)
-        /**
-         * 截图下载
-         */
-        const handleCapture = async () => {
-          capturing.value = true
-          await nextTick()
-          html2canvas(tableWrap.value).then((canvas) => {
-            canvas.toBlob((blob) => {
-              handleDownload(blob);
-              capturing.value = false
-            });
-          }).catch(() => {
-            capturing.value = false
-          })
-        };
-
-        /**
-         * 下载图片
-         */
-        const handleDownload = (blob) => {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = `capture-${Date.now()}.png`;
-          link.click();
-          URL.revokeObjectURL(url);
-        };
-
-        /**
-         * 重新计算
-         */
-        const handleReCalc = () => {
-          const options = {
-            mode: mode.value,
-            dataSource: tableData.value,
-            mergeFields,
-            genSort: true,
-            reCalc: true,
+          /**
+           * 合并单元格
+           */
+          const spanMethod = ({ row, column, columnIndex }) => {
+            if (columnIndex === 0) {
+              return mode.value === Mode.Col
+                ? { rowspan: 1, colspan: 1 }
+                : getFieldSpan(row, 'name');
+            }
+            return getFieldSpan(row, column.property);
           };
-          if ([Mode.Col, Mode.RowCol].includes(mode.value)) {
-            options.columns = columns.map((item) => ({ prop: item.prop }));
-            options.mergeFields = columns.map((item) => item.prop);
-          }
-          if (mode.value === Mode.Col) {
-            delete options.genSort;
-          }
-          const mergedData = getMergedData(options);
-          console.log(mergedData);
-          tableData.value = mergedData;
-        };
 
-        /**
-         * 删除
-         */
-        const handleDel = (index) => {
-          tableData.value.splice(index, 1);
-          handleReCalc();
-        };
+          const capturing = ref(false);
+          /**
+           * 截图下载
+           */
+          const handleCapture = async () => {
+            capturing.value = true;
+            await nextTick();
+            html2canvas(tableWrap.value)
+              .then((canvas) => {
+                canvas.toBlob((blob) => {
+                  handleDownload(blob);
+                  capturing.value = false;
+                });
+              })
+              .catch(() => {
+                capturing.value = false;
+              });
+          };
 
-        onMounted(() => {
-          getTableData();
-        });
+          /**
+           * 下载图片
+           */
+          const handleDownload = (blob) => {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `capture-${Date.now()}.png`;
+            link.click();
+            URL.revokeObjectURL(url);
+          };
 
-        return {
-          mode,
-          tableData,
-          Mode,
-          spanMethod,
-          getTableData,
-          columns,
-          getSortNo,
-          handleCapture,
-          tableWrap,
-          handleReCalc,
-          handleDel,
-          capturing
-        };
-      },
-    });
+          /**
+           * 重新计算
+           */
+          const handleReCalc = () => {
+            const options = {
+              mode: mode.value,
+              dataSource: tableData.value,
+              mergeFields,
+              genSort: true,
+              reCalc: true,
+            };
+            if ([Mode.Col, Mode.RowCol].includes(mode.value)) {
+              options.columns = columns.map((item) => ({ prop: item.prop }));
+              options.mergeFields = columns.map((item) => item.prop);
+            }
+            if (mode.value === Mode.Col) {
+              delete options.genSort;
+            }
+            const mergedData = getMergedData(options);
+            console.log(mergedData);
+            tableData.value = mergedData;
+          };
 
-    app.use(ElementPlus);
+          /**
+           * 删除
+           */
+          const handleDel = (index) => {
+            tableData.value.splice(index, 1);
+            handleReCalc();
+          };
 
-    app.mount('#app');
-  </script>
-</body>
+          onMounted(() => {
+            getTableData();
+          });
 
+          return {
+            mode,
+            tableData,
+            Mode,
+            spanMethod,
+            getTableData,
+            columns,
+            getSortNo,
+            handleCapture,
+            tableWrap,
+            handleReCalc,
+            handleDel,
+            capturing,
+          };
+        },
+      });
+
+      app.use(ElementPlus);
+
+      app.mount('#app');
+    </script>
+  </body>
 </html>
