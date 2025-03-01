@@ -1,2 +1,5 @@
 packages/**/dist
 tsconfig.json
+pnpm-lock.yaml
+package.json
+.husky
