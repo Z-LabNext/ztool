@@ -29,11 +29,12 @@ export default defineConfig(({ mode }) => {
   const entry = resolve(__dirname, './src/main.ts');
   const pkgJson = getPkgJson();
   const isProd = mode === 'production';
+  const name = 'ztool';
 
   return {
     mode,
     define: {
-      __APP_NAME__: JSON.stringify(pkgJson.name),
+      __APP_NAME__: name,
       __APP_VERSION__: JSON.stringify(pkgJson.version),
     },
     build: {
@@ -43,12 +44,12 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: [
           {
-            entryFileNames: fmtEntryFileNames(FORMAT_TYPE.es, pkgJson.name),
+            entryFileNames: fmtEntryFileNames(FORMAT_TYPE.es, name),
             format: FORMAT_TYPE.es,
             manualChunks: (id: string) => manualChunks(FORMAT_TYPE.es, id),
           },
           {
-            entryFileNames: fmtEntryFileNames(FORMAT_TYPE.cjs, pkgJson.name),
+            entryFileNames: fmtEntryFileNames(FORMAT_TYPE.cjs, name),
             format: FORMAT_TYPE.cjs,
             manualChunks: (id: string) => manualChunks(FORMAT_TYPE.cjs, id),
           },

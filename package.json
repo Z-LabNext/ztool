@@ -8,8 +8,8 @@
     "prettier": "prettier . --write",
     "prepare": "husky"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["table-merge", "tools"],
+  "author": "Jinming6",
   "license": "ISC",
   "type": "module",
   "main": "./dist/cjs/ztool.min.js",
