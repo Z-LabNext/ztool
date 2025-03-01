@@ -12,7 +12,7 @@ Helps you easily handle "cell merging" in tables.
 
 ### Merge "Rows"
 
-![capture-1740817031905.png](https://s2.loli.net/2025/03/01/mxlb8P6JvyASqa4.png)
+![capture-1740817082040.png](https://s2.loli.net/2025/03/01/hT2ZmlvECi4xWpj.png)
 
 ```js
 import { getMergedData, Mode, getFieldSpan } from '@zLabNext/ztool';
@@ -95,7 +95,7 @@ function spanMethod({ row, column }) {
 
 ### Merge "Columns"
 
-![capture-1740817051358.png](https://s2.loli.net/2025/03/01/xoI12bhTt8lwUCy.png)
+![capture-1740817073222.png](https://s2.loli.net/2025/03/01/7o2zNxwduamXMkI.png)
 
 ```js
 import { getMergedData, Mode, getFieldSpan } from '@zLabNext/ztool';
