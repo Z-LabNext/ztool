@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html {
+        background-color: black;
+        color: white;
+      }
+
+      .rgbColor,
+      .hexColor {
+        width: 100px;
+        height: 100px;
+        transition: 0.2s;
+        border-radius: 10px;
+        border: 1px solid white;
+        text-align: center;
+        line-height: 100px;
+      }
+
+      .rgb,
+      .hex {
+        height: 24px;
+        font-size: 12px;
+        line-height: 24px;
+      }
+
+      .table {
+        border-collapse: collapse;
+
+        th,
+        td {
+          border: 1px solid white;
+        }
+      }
+
+      .demo {
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        /* background-color: white; */
+        padding: 10px;
+        position: relative;
+      }
+
+      .demo::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        position: absolute;
+        top: -50%;
+        left: 0;
+        z-index: 9;
+      }
+
+      .demo::after {
+        content: '';
+        display: block;
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
+        border: 10px solid red;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        position: absolute;
+        inset: 0;
+        border-radius: 100%;
+        animation: rotate 0.5s linear forwards;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotateZ(-45deg);
+        }
+
+        100% {
+          transform: rotateZ(135deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="demo"></div>
+    <h1>Example</h1>
+    <section>
+      <h2>随机RGB</h2>
+      <div class="rgbColor">
+        <span>你好</span>
+      </div>
+      <div class="rgb"></div>
+      <button id="randomRgbBtn">Random</button>
+    </section>
+    <section>
+      <h2>随机HEX</h2>
+      <div class="hexColor">
+        <span>你好</span>
+      </div>
+      <div class="hex"></div>
+      <button id="randomHexBtn">Random</button>
+    </section>
+    <section>
+      <h2>下载文件</h2>
+      <button id="downloadFileBtn">Download</button>
+    </section>
+    <section>
+      <h2>转换为Webp</h2>
+      <input type="file" id="fileInput" accept="image/*" />
+    </section>
+    <section>
+      <h2>在线图片</h2>
+      <button id="testBtn">下载webp</button>
+    </section>
+
+    <script type="module">
+      import * as mingTool from '../../dist/es/ztool.min.js';
+
+      const randomRgbBtn = document.getElementById('randomRgbBtn');
+      randomRgbBtn.addEventListener('click', () => {
+        const color = mingTool.getRandomColor({ type: 'rgb' });
+        document.querySelector('.rgb').textContent = color;
+        document.querySelector('.rgbColor').style.color = color;
+        document.querySelector('.rgbColor').style.borderColor = color;
+      });
+
+      const randomHexBtn = document.getElementById('randomHexBtn');
+      randomHexBtn.addEventListener('click', () => {
+        const color = mingTool.getRandomColor({ type: 'hex' });
+        document.querySelector('.hex').textContent = color;
+        document.querySelector('.hexColor').style.color = color;
+        document.querySelector('.hexColor').style.borderColor = color;
+      });
+
+      const downloadFileBtn = document.getElementById('downloadFileBtn');
+      downloadFileBtn.addEventListener('click', () => {
+        const str = '大道泛兮，其可左右。';
+        const encoder = new TextEncoder();
+        const encodedData = encoder.encode(str);
+        const buffer = new ArrayBuffer(encodedData.byteLength);
+        const uint8Array = new Uint8Array(buffer);
+        uint8Array.set(encodedData);
+        mingTool.downloadFile({
+          inputType: 'arrayBuffer',
+          arrayBuffer: buffer,
+          filename: 'example.txt',
+        });
+
+        // const url = 'https://picsum.photos/200/300';
+        // const filename = 'test.png';
+        // mingTool.downloadFile({
+        //   inputType: 'url',
+        //   url,
+        //   filename,
+        // })
+      });
+
+      const dataSource = [
+        {
+          label: '关闭',
+          value: 0,
+        },
+        {
+          label: '开启',
+          value: 1,
+        },
+        {
+          label: '暂停',
+          value: 2,
+        },
+      ];
+      const option = new mingTool.Option({ dataSource });
+      console.log(option);
+      console.log(
+        'getLabel1',
+        option.getLabel({ key: 3, allowReplaceEmpty: true }),
+      );
+      console.log(
+        'getLabel2',
+        option.getLabel({ key: 3, allowReplaceEmpty: true, replaceStr: '~~' }),
+      );
+      console.log('getLabel3', option.getLabel({ key: 1 }));
+      setTimeout(() => {
+        dataSource.push({
+          label: '继续',
+          value: 3,
+        });
+        option.update({ dataSource });
+        console.log(option);
+      }, 1000);
+
+      const fileInput = document.getElementById('fileInput');
+      fileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        const blob = await mingTool.convert2Webp(file);
+        const url = URL.createObjectURL(blob);
+        mingTool.downloadFile({
+          inputType: 'url',
+          url,
+          filename: 'example.webp',
+        });
+        URL.revokeObjectURL(url);
+      });
+
+      const testBtn = document.getElementById('testBtn');
+      testBtn.addEventListener('click', async () => {
+        try {
+          const img = new Image();
+          img.src = 'https://s2.loli.net/2024/04/26/z9NEnaI7lJqwrx5.png';
+          img.crossOrigin = 'anonymous';
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob(async (blob) => {
+              const webpBlob = await mingTool.convert2Webp(blob);
+              mingTool.downloadArrayBuffer(webpBlob, 'example.webp');
+            });
+          };
+        } catch (e) {
+          console.log(e);
+        }
+      });
+
+      // 获取文件名
+      console.log(
+        mingTool.getFilenameFromDisposition(
+          'attachment; filename="example.txt"',
+        ),
+      );
+      console.log(
+        mingTool.getFilenameFromDisposition('attachment; filename=example.txt'),
+      );
+      console.log(
+        mingTool.getFilenameFromDisposition(
+          "attachment; filename*=UTF-8''%e4%b8%ad%e6%96%87.txt",
+        ),
+      );
+      console.log(mingTool.getFilenameFromDisposition('attachment'));
+      console.log(mingTool.getFilenameFromDisposition());
+
+      // 日期参数处理
+      console.log(
+        mingTool.splitDateRange({
+          dateRange: ['2024-11-13', '2024-11-14'],
+          outStartField: 'start',
+          outEndField: 'end',
+        }),
+      );
+      console.log(
+        mingTool.splitDateRange({
+          dateRange: [Date.now(), Date.now()],
+          outStartField: 'start',
+          outEndField: 'end',
+        }),
+      );
+      console.log(mingTool.splitDateRange({ dateRange: [] }));
+
+      console.log(
+        'combineDateRange',
+        mingTool.combineDateRange({
+          inStartField: 'start',
+          inEndField: 'end',
+          obj: { start: '2024-11-13', end: '2024-11-14' },
+        }),
+      );
+      console.log(
+        'combineDateRange',
+        mingTool.combineDateRange({
+          obj: { startDate: Date.now(), endDate: Date.now() },
+        }),
+      );
+      console.log('combineDateRange', mingTool.combineDateRange({ obj: {} }));
+
+      // 地址格式化
+      console.log(
+        mingTool.fmtAddressStr({
+          addressStr: '山东省,青岛市,崂山区',
+          needSplit: true,
+          needJoin: true,
+          extraStrArr: ['xx街道xx号'],
+          joinFlag: '',
+        }),
+      );
+      console.log(
+        mingTool.fmtAddressStr({
+          addressStr: '山东省,青岛市,崂山区',
+          needSplit: true,
+          needJoin: true,
+          extraStrArr: ['xx街道xx号'],
+          joinFlag: ',',
+        }),
+      );
+      console.log(
+        mingTool.fmtAddressStr({
+          addressStr: '',
+          needSplit: true,
+          needJoin: true,
+          extraStrArr: ['xx街道xx号'],
+          joinFlag: ',',
+        }),
+      );
+      console.log(
+        mingTool.fmtAddressStr({
+          addressStr: '山东省,青岛市,崂山区',
+          needSplit: true,
+          needJoin: true,
+          extraStrArr: [],
+          joinFlag: ',',
+        }),
+      );
+    </script>
+  </body>
+</html>
