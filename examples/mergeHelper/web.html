@@ -190,8 +190,10 @@
               reCalc: true,
             };
             if ([Mode.Col, Mode.RowCol].includes(mode.value)) {
-              options.columns = columns.map((item) => ({ prop: item.prop }));
-              options.mergeFields = columns.map((item) => item.prop);
+              options.columns = columns.value.map((item) => ({
+                prop: item.prop,
+              }));
+              options.mergeFields = columns.value.map((item) => item.prop);
             }
             if (mode.value === Mode.Col) {
               delete options.genSort;

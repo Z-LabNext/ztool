@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
   return {
     mode,
     define: {
-      __APP_NAME__: name,
+      __APP_NAME__: JSON.stringify(name),
       __APP_VERSION__: JSON.stringify(pkgJson.version),
     },
     build: {
