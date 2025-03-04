@@ -39,7 +39,7 @@ jobs:
       - name: Create and push tag
         if: steps.check_tag.outputs.SKIP == 'false' # 仅在 Tag 不存在时执行
         run: |
-          git config user.name "JinMing6"
+          git config user.name "Jinming6"
           git config user.email "response965@163.com"
           git tag ${{ steps.get_version.outputs.VERSION }}
           git push origin ${{ steps.get_version.outputs.VERSION }}
