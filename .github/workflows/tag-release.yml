@@ -1,0 +1,47 @@
+name: Tag Release
+
+on:
+  push:
+    branches:
+      - main # 监听 main 分支的 push 事件（包括合并 PR 后的推送）
+
+jobs:
+  tag-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # 获取完整历史，以便检查 Tag
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # 根据你的项目调整 Node.js 版本
+
+      - name: Get package.json version
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=v$VERSION" >> $GITHUB_OUTPUT # 输出带前缀 v 的版本号（如 v1.0.0）
+
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          TAG=${{ steps.get_version.outputs.VERSION }}
+          if git rev-parse $TAG >/dev/null 2>&1; then
+            echo "Tag $TAG already exists, skipping..."
+            echo "SKIP=true" >> $GITHUB_OUTPUT
+          else
+            echo "SKIP=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create and push tag
+        if: steps.check_tag.outputs.SKIP == 'false' # 仅在 Tag 不存在时执行
+        run: |
+          git config user.name "Jinming6"
+          git config user.email "response965@163.com"
+          git tag ${{ steps.get_version.outputs.VERSION }}
+          git push origin ${{ steps.get_version.outputs.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
