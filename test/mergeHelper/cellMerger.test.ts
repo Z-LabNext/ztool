@@ -10,8 +10,7 @@ import {
   SORT_NO_KEY,
 } from '../../src/models/mergeHelper/cellMerger/cellMerger.constants';
 import data from '../../examples/mergeHelper/data.json';
-import { Mode, getFieldSpan } from '../../src/main';
-import { getMergedData, getSortNo } from '../../src/api';
+import { Mode, getFieldSpan, getMergedData, getSortNo } from '../../src/main';
 
 const validMergedData = (mergedData: DataSourceItem[]): boolean => {
   const result = mergedData.every((item) => {

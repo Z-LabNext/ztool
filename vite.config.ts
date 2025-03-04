@@ -10,7 +10,8 @@ const FORMAT_TYPE = {
 };
 
 function fmtEntryFileNames(format: string, entryName: string): string {
-  return `${format}/${entryName}.min.js`;
+  const ext = format === FORMAT_TYPE.es ? 'js' : 'cjs';
+  return `${format}/${entryName}.min.${ext}`;
 }
 
 function getPkgJson() {

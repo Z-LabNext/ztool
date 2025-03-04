@@ -1,11 +1,15 @@
 import { test, expect } from 'vitest';
-import { Mode, getFieldSpan, splitIntoFragments } from '../../src/main';
+import {
+  Mode,
+  getFieldSpan,
+  splitIntoFragments,
+  getSortNo,
+} from '../../src/main';
 import {
   type ColumnItem,
   type DataSourceItem,
 } from '../../src/models/mergeHelper/cellMerger/cellMerger.types';
 import { SORT_NO_KEY } from '../../src/models/mergeHelper/cellMerger/cellMerger.constants';
-import { getSortNo } from '../../src/api';
 
 const getColumns = (): ColumnItem[] => {
   return [
