@@ -44,3 +44,4 @@ jobs:
           git config user.email "response965@163.com"
           git tag ${{ steps.get_version.outputs.VERSION }}
           git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Z-LabNext/ztool.git ${{ steps.get_version.outputs.VERSION }}
+        shell: bash
