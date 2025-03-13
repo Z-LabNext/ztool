@@ -39,6 +39,7 @@ export default defineConfig(({ mode }) => {
       __APP_VERSION__: JSON.stringify(pkgJson.version),
     },
     build: {
+      target: 'es6',
       lib: {
         entry,
       },
