@@ -1,8 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import {
-  combineDateRange,
-  splitDateRange,
-} from '../../src/mingTool/params/index';
+import { combineDateRange, splitDateRange } from '../../src/tools/params';
 
 describe('params', () => {
   test('拆分日期区间', () => {

@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { beforeAll, describe, test, expect, vi } from 'vitest';
-import { InputType } from '../../src/models/mingTool/file/file.enums';
+import { InputType } from '../../src/models/file/file.enums';
 import {
   downloadArrayBuffer,
   downloadFile,

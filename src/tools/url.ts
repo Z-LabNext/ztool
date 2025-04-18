@@ -1,5 +1,5 @@
 import { isString } from 'lodash-es';
-import { warn } from '../../utils/warning';
+import { warn } from '../utils/warning';
 
 /**
  * 从url中获取文件名

@@ -25,8 +25,8 @@ $ pnpm add @zlabnext/ztool -S
 
 ## API
 
-- [Table Merge API](./docs/en/mergeHelper.md)
-- [Tools API](./docs/en/mingTool.md)
+- [Merger API](./docs/en/merger.md)
+- [Tools API](./docs/en/tools.md)
 
 ## Other
 

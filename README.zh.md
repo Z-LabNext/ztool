@@ -25,8 +25,8 @@ $ pnpm add @zlabnext/ztool -S
 
 ## API
 
-- [表格合并API](./docs/zh/mergeHelper.md)
-- [工具API](./docs/zh/mingTool.md)
+- [表格合并API](./docs/zh/merger.md)
+- [工具API](./docs/zh/tools.md)
 
 ## 其他
 

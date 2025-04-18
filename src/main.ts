@@ -1,2 +1,2 @@
-export * from './mergeHelper';
-export * from './mingTool';
+export * from './merger';
+export * from './tools';

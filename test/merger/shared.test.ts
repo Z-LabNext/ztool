@@ -8,8 +8,8 @@ import {
 import {
   type ColumnItem,
   type DataSourceItem,
-} from '../../src/models/mergeHelper/cellMerger/cellMerger.types';
-import { SORT_NO_KEY } from '../../src/models/mergeHelper/cellMerger/cellMerger.constants';
+} from '../../src/models/merger/merger.types';
+import { SORT_NO_KEY } from '../../src/models/merger/merger.constants';
 
 const getColumns = (): ColumnItem[] => {
   return [

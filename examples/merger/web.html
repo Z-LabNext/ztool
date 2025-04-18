@@ -84,11 +84,11 @@
       referrerpolicy="no-referrer"
     ></script>
     <script type="module">
-      import * as mergeHelper from '../../dist/es/ztool.min.js';
+      import * as merger from '../../dist/es/ztool.min.js';
 
       const { createApp, ref, onMounted, nextTick } = Vue;
       const { Mode, getMergedData, getFieldSpan, constants, getSortNo } =
-        mergeHelper;
+        merger;
       const app = createApp({
         setup() {
           const mode = ref(Mode.Row);

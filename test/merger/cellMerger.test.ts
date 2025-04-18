@@ -4,12 +4,12 @@ import { CellMerger } from '../../src/main';
 import type {
   CellMergerOptions,
   DataSourceItem,
-} from '../../src/models/mergeHelper/cellMerger/cellMerger.types';
+} from '../../src/models/merger/merger.types';
 import {
   MERGE_OPTS_KEY,
   SORT_NO_KEY,
-} from '../../src/models/mergeHelper/cellMerger/cellMerger.constants';
-import data from '../../examples/mergeHelper/data.json';
+} from '../../src/models/merger/merger.constants';
+import data from '../../examples/merger/data.json';
 import { Mode, getFieldSpan, getMergedData, getSortNo } from '../../src/main';
 
 const validMergedData = (mergedData: DataSourceItem[]): boolean => {

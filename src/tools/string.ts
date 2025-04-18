@@ -1,6 +1,6 @@
 import { isArray, isPlainObject, isString } from 'lodash-es';
-import { type FmtAddressStrOptions } from '../../models/mingTool/string/string.interfaces';
-import { warn } from '../../utils/warning';
+import { type FmtAddressStrOptions } from '../models/string/string.interfaces';
+import { warn } from '../utils/warning';
 
 export const DefaultReplaceStr = '--';
 export const DefaultSplitStr = ',';

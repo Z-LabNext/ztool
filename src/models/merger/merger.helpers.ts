@@ -1,7 +1,7 @@
-import type { CellMergerOptions } from './cellMerger.types';
+import type { CellMergerOptions } from './merger.types';
 import { isArray, isPlainObject, isString } from 'lodash-es';
-import { warn } from '../../../utils/warning';
-import { Mode } from './cellMerger.enums';
+import { warn } from '../../utils/warning';
+import { Mode } from './merger.enums';
 
 /**
  * 获取第一个合并的列字段

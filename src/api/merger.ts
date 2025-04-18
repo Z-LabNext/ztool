@@ -1,16 +1,13 @@
 import { cloneDeep, isArray, isPlainObject, isString } from 'lodash-es';
-import { CellMerger } from '../mergeHelper/cellMerger';
+import { CellMerger } from '../merger/cellMerger';
 import {
   type FieldSpan,
   type CellMergerOptions,
   type DataSourceItem,
   type SplitIntoFragmentsOpts,
-} from '../models/mergeHelper/cellMerger/cellMerger.types';
-import { getFirstMergeField } from '../models/mergeHelper/cellMerger/cellMerger.helpers';
-import {
-  MERGE_OPTS_KEY,
-  SORT_NO_KEY,
-} from '../models/mergeHelper/cellMerger/cellMerger.constants';
+} from '../models/merger/merger.types';
+import { getFirstMergeField } from '../models/merger/merger.helpers';
+import { MERGE_OPTS_KEY, SORT_NO_KEY } from '../models/merger/merger.constants';
 
 /**
  * 获取合并后的数据

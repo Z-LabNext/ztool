@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { ColorType } from '../../src/models/mingTool/color/color.enums';
+import { ColorType } from '../../src/models//color/color.enums';
 import { getRandomColor, getRandomHex, getRandomRgb } from '../../src/main';
 
 describe('color', () => {

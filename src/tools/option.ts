@@ -5,9 +5,9 @@ import type {
   DataSourceItem,
   FieldsName,
   GetLabelOptions,
-} from '../../models/mingTool/option/option.interfaces';
-import { DefaultReplaceStr, replaceEmpty } from '../string';
-import { warn } from '../../utils/warning';
+} from '../models/option/option.interfaces';
+import { DefaultReplaceStr, replaceEmpty } from './string';
+import { warn } from '../utils/warning';
 
 export const DefaultFieldsName: FieldsName = { label: 'label', value: 'value' };
 

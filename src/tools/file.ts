@@ -1,10 +1,10 @@
 import { isArrayBuffer, isString } from 'lodash-es';
-import { warn } from '../../utils/warning';
+import { warn } from '../utils/warning';
 import {
   type DownloadFileOpts,
   type DownloadFileV2Opts,
-} from '../../models/mingTool/file/file.interfaces';
-import { InputType } from '../../models/mingTool/file/file.enums';
+} from '../models/file/file.interfaces';
+import { InputType } from '../models/file/file.enums';
 
 /**
  * 下载文件(arrayBuffer)

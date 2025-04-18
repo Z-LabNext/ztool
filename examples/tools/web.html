@@ -117,11 +117,11 @@
     </section>
 
     <script type="module">
-      import * as mingTool from '../../dist/es/ztool.min.js';
+      import * as tools from '../../dist/es/ztool.min.js';
 
       const randomRgbBtn = document.getElementById('randomRgbBtn');
       randomRgbBtn.addEventListener('click', () => {
-        const color = mingTool.getRandomColor({ type: 'rgb' });
+        const color = tools.getRandomColor({ type: 'rgb' });
         document.querySelector('.rgb').textContent = color;
         document.querySelector('.rgbColor').style.color = color;
         document.querySelector('.rgbColor').style.borderColor = color;
@@ -129,7 +129,7 @@
 
       const randomHexBtn = document.getElementById('randomHexBtn');
       randomHexBtn.addEventListener('click', () => {
-        const color = mingTool.getRandomColor({ type: 'hex' });
+        const color = tools.getRandomColor({ type: 'hex' });
         document.querySelector('.hex').textContent = color;
         document.querySelector('.hexColor').style.color = color;
         document.querySelector('.hexColor').style.borderColor = color;
@@ -143,7 +143,7 @@
         const buffer = new ArrayBuffer(encodedData.byteLength);
         const uint8Array = new Uint8Array(buffer);
         uint8Array.set(encodedData);
-        mingTool.downloadFile({
+        tools.downloadFile({
           inputType: 'arrayBuffer',
           arrayBuffer: buffer,
           filename: 'example.txt',
@@ -151,7 +151,7 @@
 
         // const url = 'https://picsum.photos/200/300';
         // const filename = 'test.png';
-        // mingTool.downloadFile({
+        // tools.downloadFile({
         //   inputType: 'url',
         //   url,
         //   filename,
@@ -172,7 +172,7 @@
           value: 2,
         },
       ];
-      const option = new mingTool.Option({ dataSource });
+      const option = new tools.Option({ dataSource });
       console.log(option);
       console.log(
         'getLabel1',
@@ -195,9 +195,9 @@
       const fileInput = document.getElementById('fileInput');
       fileInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
-        const blob = await mingTool.convert2Webp(file);
+        const blob = await tools.convert2Webp(file);
         const url = URL.createObjectURL(blob);
-        mingTool.downloadFile({
+        tools.downloadFile({
           inputType: 'url',
           url,
           filename: 'example.webp',
@@ -218,8 +218,8 @@
             canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
             canvas.toBlob(async (blob) => {
-              const webpBlob = await mingTool.convert2Webp(blob);
-              mingTool.downloadArrayBuffer(webpBlob, 'example.webp');
+              const webpBlob = await tools.convert2Webp(blob);
+              tools.downloadArrayBuffer(webpBlob, 'example.webp');
             });
           };
         } catch (e) {
@@ -229,41 +229,39 @@
 
       // 获取文件名
       console.log(
-        mingTool.getFilenameFromDisposition(
-          'attachment; filename="example.txt"',
-        ),
+        tools.getFilenameFromDisposition('attachment; filename="example.txt"'),
       );
       console.log(
-        mingTool.getFilenameFromDisposition('attachment; filename=example.txt'),
+        tools.getFilenameFromDisposition('attachment; filename=example.txt'),
       );
       console.log(
-        mingTool.getFilenameFromDisposition(
+        tools.getFilenameFromDisposition(
           "attachment; filename*=UTF-8''%e4%b8%ad%e6%96%87.txt",
         ),
       );
-      console.log(mingTool.getFilenameFromDisposition('attachment'));
-      console.log(mingTool.getFilenameFromDisposition());
+      console.log(tools.getFilenameFromDisposition('attachment'));
+      console.log(tools.getFilenameFromDisposition());
 
       // 日期参数处理
       console.log(
-        mingTool.splitDateRange({
+        tools.splitDateRange({
           dateRange: ['2024-11-13', '2024-11-14'],
           outStartField: 'start',
           outEndField: 'end',
         }),
       );
       console.log(
-        mingTool.splitDateRange({
+        tools.splitDateRange({
           dateRange: [Date.now(), Date.now()],
           outStartField: 'start',
           outEndField: 'end',
         }),
       );
-      console.log(mingTool.splitDateRange({ dateRange: [] }));
+      console.log(tools.splitDateRange({ dateRange: [] }));
 
       console.log(
         'combineDateRange',
-        mingTool.combineDateRange({
+        tools.combineDateRange({
           inStartField: 'start',
           inEndField: 'end',
           obj: { start: '2024-11-13', end: '2024-11-14' },
@@ -271,15 +269,15 @@
       );
       console.log(
         'combineDateRange',
-        mingTool.combineDateRange({
+        tools.combineDateRange({
           obj: { startDate: Date.now(), endDate: Date.now() },
         }),
       );
-      console.log('combineDateRange', mingTool.combineDateRange({ obj: {} }));
+      console.log('combineDateRange', tools.combineDateRange({ obj: {} }));
 
       // 地址格式化
       console.log(
-        mingTool.fmtAddressStr({
+        tools.fmtAddressStr({
           addressStr: '山东省,青岛市,崂山区',
           needSplit: true,
           needJoin: true,
@@ -288,7 +286,7 @@
         }),
       );
       console.log(
-        mingTool.fmtAddressStr({
+        tools.fmtAddressStr({
           addressStr: '山东省,青岛市,崂山区',
           needSplit: true,
           needJoin: true,
@@ -297,7 +295,7 @@
         }),
       );
       console.log(
-        mingTool.fmtAddressStr({
+        tools.fmtAddressStr({
           addressStr: '',
           needSplit: true,
           needJoin: true,
@@ -306,7 +304,7 @@
         }),
       );
       console.log(
-        mingTool.fmtAddressStr({
+        tools.fmtAddressStr({
           addressStr: '山东省,青岛市,崂山区',
           needSplit: true,
           needJoin: true,

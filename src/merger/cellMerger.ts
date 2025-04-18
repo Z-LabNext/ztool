@@ -12,21 +12,24 @@ import type {
   DataSourceItem,
   MergeFieldItem,
   MergeFields,
-} from '../models/mergeHelper/cellMerger/cellMerger.types';
+} from '../models/merger/merger.types';
 import {
   MERGE_OPTS_KEY,
   ROW_KEY,
   SORT_NO_KEY,
-} from '../models/mergeHelper/cellMerger/cellMerger.constants';
-import { Mode } from '../models/mergeHelper/cellMerger/cellMerger.enums';
+} from '../models/merger/merger.constants';
+import { Mode } from '../models/merger/merger.enums';
 import {
   getFirstMergeField,
   isValueInEnum,
   validateColumns,
   validateMergeFields,
-} from '../models/mergeHelper/cellMerger/cellMerger.helpers';
+} from '../models/merger/merger.helpers';
 import { warn } from '../utils/warning';
 
+/**
+ * 单元格合并计算类
+ */
 export class CellMerger {
   // 数据源
   dataSource: CellMergerOptions['dataSource'];
