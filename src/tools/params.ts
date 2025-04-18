@@ -72,3 +72,27 @@ export function combineDateRange(
   result.push(endDateValue);
   return result;
 }
+
+/**
+ * 数组拼接为字符串
+ * @param arr - 原始数组
+ * @param joinFlag - 拼接符号
+ */
+export function arrToStr(arr: unknown[], joinFlag = ',') {
+  if (!isArray(arr)) {
+    return '';
+  }
+  return arr.join(joinFlag);
+}
+
+/**
+ * 字符拆分为数组
+ * @param str - 原始字符串
+ * @param splitFlag - 拆分符号
+ */
+export function strToArr(str: string, splitFlag = ',') {
+  if (!isString(str)) {
+    return [];
+  }
+  return str.split(splitFlag);
+}
