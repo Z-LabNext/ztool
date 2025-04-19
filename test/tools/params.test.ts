@@ -54,9 +54,17 @@ describe('params', () => {
   });
 
   test('空数组转字符串', () => {
-    const arr = [];
+    const arr: string[] = [];
     const str = arrToStr(arr);
     expect(str).toBe('');
+  });
+
+  test('非数组类型转字符串', () => {
+    const values = [undefined, null, 1, '1', true, false];
+    for (let i = 0; i < values.length; i++) {
+      const str = arrToStr(values[i] as any);
+      expect(str).toBe('');
+    }
   });
 
   test('字符串转数组', () => {
@@ -79,5 +87,13 @@ describe('params', () => {
       result.push(arr[i] === targetArr[i]);
     }
     expect(result.indexOf(false) === -1).toBe(false);
+  });
+
+  test('非字符串类型转数组', () => {
+    const values = [undefined, null, 1, true, false];
+    for (let i = 0; i < values.length; i++) {
+      const arr = strToArr(values[i] as any);
+      expect(arr.length).toBe(0);
+    }
   });
 });
