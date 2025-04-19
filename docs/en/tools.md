@@ -4,17 +4,17 @@ High-frequency methods used during development.
 
 ## Features
 
-- :white_check_mark: [Public Dropdown Options](#option)
-- :white_check_mark: [Replace Empty Values](#replaceempty)
-- :white_check_mark: [Download Files](#downloadfilev2)
-- :white_check_mark: [Random Color](#getrandomcolor)
-- :white_check_mark: [Image to WebP Conversion](#convert2webp)
-- :white_check_mark: [Get Filename and Extension from URL](#getfilenamefromurl)
-- :white_check_mark: [Get Filename and Extension from Content-Disposition](#getfilenamefromdisposition)
-- :white_check_mark: ~~[Browser Compatibility Warning](#compatibility)~~
-- :white_check_mark: [Split Date Range](#splitdaterange)
-- :white_check_mark: [Combine Date Range](#combinedaterange)
-- :white_check_mark: [Format Address String](#fmtaddressstr)
+- [x] [Public Dropdown Options](#option)
+- [x] [Replace Empty Values](#replaceempty)
+- [x] [Download Files](#downloadfilev2)
+- [x] [Random Color](#getrandomcolor)
+- [x] [Image to WebP Conversion](#convert2webp)
+- [x] [Get Filename and Extension from URL](#getfilenamefromurl)
+- [x] [Get Filename and Extension from Content-Disposition](#getfilenamefromdisposition)
+- [x] ~~[Browser Compatibility Warning](#compatibility)~~
+- [x] [Split Date Range](#splitdaterange)
+- [x] [Combine Date Range](#combinedaterange)
+- [x] [Format Address String](#fmtaddressstr)
 
 ## API
 

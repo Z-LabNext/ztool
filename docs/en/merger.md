@@ -4,9 +4,9 @@ Helps you easily handle "cell merging" in tables.
 
 ## Features
 
-- :white_check_mark: Merge `rows` and `columns`
-- :white_check_mark: Generate sequence numbers after merging
-- :white_check_mark: Data segmentation
+- [x] Merge `rows` and `columns`
+- [x] Generate sequence numbers after merging
+- [x] Data segmentation
 
 ## Quick Start
 
