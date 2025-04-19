@@ -4,9 +4,9 @@
 
 ## 特性
 
-- :white_check_mark: 合并`行`、`列`
-- :white_check_mark: 生成`合并`后的序号
-- :white_check_mark: 数据`分段`
+- [x] 合并`行`、`列`
+- [x] 生成`合并`后的序号
+- [x] 数据`分段`
 
 ## 快速上手
 

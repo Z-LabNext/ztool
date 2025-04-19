@@ -4,17 +4,17 @@
 
 ## 特性
 
-- :white_check_mark: [公共下拉选项](#option)
-- :white_check_mark: [空值替换](#replaceempty)
-- :white_check_mark: [下载文件](#downloadfilev2)
-- :white_check_mark: [随机颜色](#getrandomcolor)
-- :white_check_mark: [图片转 Webp](#convert2webp)
-- :white_check_mark: [根据 url 获取文件名及后缀](#getfilenamefromurl)
-- :white_check_mark: [根据 content-disposition 获取文件名及后缀](#getfilenamefromdisposition)
-- :white_check_mark: ~~[浏览器兼容性提示](#compatibility)~~
-- :white_check_mark: [拆分日期区间](#splitdaterange)
-- :white_check_mark: [组合日期区间](#combinedaterange)
-- :white_check_mark: [格式化地址字符串](#fmtaddressstr)
+- [x] [公共下拉选项](#option)
+- [x] [空值替换](#replaceempty)
+- [x] [下载文件](#downloadfilev2)
+- [x] [随机颜色](#getrandomcolor)
+- [x] [图片转 Webp](#convert2webp)
+- [x] [根据 url 获取文件名及后缀](#getfilenamefromurl)
+- [x] [根据 content-disposition 获取文件名及后缀](#getfilenamefromdisposition)
+- [x] ~~[浏览器兼容性提示](#compatibility)~~
+- [x] [拆分日期区间](#splitdaterange)
+- [x] [组合日期区间](#combinedaterange)
+- [x] [格式化地址字符串](#fmtaddressstr)
 
 ## API
 
