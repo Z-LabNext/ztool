@@ -1,6 +1,6 @@
 # 工具API
 
-开发过程中，高频使用的方法。
+一些js工具函数
 
 ## 特性
 
@@ -15,6 +15,8 @@
 - [x] [拆分日期区间](#splitdaterange)
 - [x] [组合日期区间](#combinedaterange)
 - [x] [格式化地址字符串](#fmtaddressstr)
+- [x] [数组转字符串](#arrtostr)
+- [x] [字符串转数组](#strtoarr)
 
 ## API
 
@@ -398,4 +400,53 @@ const result = fmtAddressStr({
 });
 
 console.log(result); // 山东省青岛市崂山区xx街道xx号
+```
+
+### arrToStr
+
+数组转字符串
+
+- 语法
+
+`arrToStr(str, joinFlag)`
+
+| 字段     | 类型     | 必填 | 默认 | 描述       |
+| -------- | -------- | ---- | ---- | ---------- |
+| str      | `string` | 是   | -    | 原始字符串 |
+| joinFlag | `string` | 否   | ,    | 拼接符     |
+
+- 示例代码
+
+```js
+import { arrToStr } from '@zlabnext/ztool';
+
+const result1 = arrToStr(['1', '2', '3']);
+console.log(result1); // 1,2,3
+
+const result2 = arrToStr(['1', '2', '3'], '');
+console.log(result2); // 123
+```
+
+### strToArr
+
+字符串转数组
+
+- 语法
+  `strToArr(str, splitFlag)`
+
+  | 字段      | 类型     | 必填 | 默认 | 描述       |
+  | --------- | -------- | ---- | ---- | ---------- |
+  | str       | `string` | 是   | -    | 原始字符串 |
+  | splitFlag | `string` | 否   | ,    | 拼接符     |
+
+- 示例代码
+
+```js
+import { strToArr } from '@zlabnext/ztool';
+
+const result1 = strToArr('1,2,3');
+console.log(result1); // ['1', '2', '3']
+
+const result2 = strToArr('1,2,3', '');
+console.log(result2); // ['123']
 ```

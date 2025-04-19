@@ -15,6 +15,8 @@ High-frequency methods used during development.
 - [x] [Split Date Range](#splitdaterange)
 - [x] [Combine Date Range](#combinedaterange)
 - [x] [Format Address String](#fmtaddressstr)
+- [x] [Array to String](#arrtostr)
+- [x] [String to Array](#strtoarr)
 
 ## API
 
@@ -398,4 +400,54 @@ const result = fmtAddressStr({
 });
 
 console.log(result); // Shandong ProvinceQingdao CityLaoshan DistrictXX Street No. XX
+```
+
+### arrToStr
+
+Array to String
+
+- Syntax
+
+`arrToStr(arr, joinFlag)`
+
+| Field    | Type     | Required | Default | Description       |
+| -------- | -------- | -------- | ------- | ----------------- |
+| arr      | `string` | Yes      | -       | Source array      |
+| joinFlag | `string` | No       | ,       | Joining delimiter |
+
+- Example Code
+
+```js
+import { arrToStr } from '@zlabnext/ztool';
+
+const result1 = arrToStr(['1', '2', '3']);
+console.log(result1); // 1,2,3
+
+const result2 = arrToStr(['1', '2', '3'], '');
+console.log(result2); // 123
+```
+
+### strToArr
+
+String to Array
+
+- Syntax
+
+`strToArr(str, splitFlag)`
+
+| Field     | Type     | Required | Default | Description         |
+| --------- | -------- | -------- | ------- | ------------------- |
+| str       | `string` | Yes      | -       | Source string       |
+| splitFlag | `string` | No       | ,       | Splitting delimiter |
+
+- Example Code
+
+```js
+import { strToArr } from '@zlabnext/ztool';
+
+const result1 = strToArr('1,2,3');
+console.log(result1); // ['1', '2', '3']
+
+const result2 = strToArr('1,2,3', '');
+console.log(result2); // ['123']
 ```
