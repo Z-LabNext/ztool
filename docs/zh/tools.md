@@ -1,41 +1,40 @@
-# 工具API
-
-一些js工具函数
+# 工具函数
 
 ## 特性
 
-- [x] [公共下拉选项](#option)
-- [x] [空值替换](#replaceempty)
-- [x] [下载文件](#downloadfilev2)
-- [x] [随机颜色](#getrandomcolor)
-- [x] [图片转 Webp](#convert2webp)
-- [x] [根据 url 获取文件名及后缀](#getfilenamefromurl)
-- [x] [根据 content-disposition 获取文件名及后缀](#getfilenamefromdisposition)
-- [x] ~~[浏览器兼容性提示](#compatibility)~~
-- [x] [拆分日期区间](#splitdaterange)
-- [x] [组合日期区间](#combinedaterange)
-- [x] [格式化地址字符串](#fmtaddressstr)
-- [x] [数组转字符串](#arrtostr)
-- [x] [字符串转数组](#strtoarr)
+- [x] [公共下拉选项](#公共下拉选项)
+- [x] [空值替换](#空值替换)
+- [x] [下载文件](#下载文件v2)
+- [x] [随机颜色](#随机rgb色值)
+- [x] [图片转webp格式](#图片转webp格式)
+- [x] [根据url获取文件名及后缀](#根据url获取文件名及后缀)
+- [x] [根据content-disposition获取文件名及后缀](#根据content-disposition获取文件名及后缀)
+- [x] ~~[浏览器兼容性提示](#浏览器兼容性提示-badge-typedanger-text废弃-)~~
+- [x] [拆分日期区间](#拆分日期区间)
+- [x] [组合日期区间](#组合日期区间)
+- [x] [格式化地址字符串](#格式化地址字符串)
+- [x] [数组转字符串](#数组转字符串)
+- [x] [字符串转数组](#字符串转数组)
 
 ## API
 
-### Option
+### 公共下拉选项
 
-公共下拉选项
+**语法**
 
-- 语法
+`new Option(配置项)`
 
-`new Option(options)`
+**参数**
 
-- options 属性
+| 字段                     | 类型   | 默认    | 描述         |
+| ------------------------ | ------ | ------- | ------------ |
+| options                  | Object | -       | 配置项       |
+| options.dataSource       | Array  | -       | 数据源       |
+| options.fieldsName       | Object | -       | 选项字段配置 |
+| options.fieldsName.label | String | 'label' | label 字段名 |
+| options.fieldsName.value | String | 'value' | value 字段名 |
 
-| 字段       | 类型     | 默认                                 | 描述         |
-| ---------- | -------- | ------------------------------------ | ------------ |
-| dataSource | `Array`  | -                                    | 数据源       |
-| fieldsName | `Object` | `{ label: 'label', value: 'value' }` | 选项字段配置 |
-
-- 实例方法
+**方法**
 
 | 名称     | 参数              | 返回 | 描述       |
 | -------- | ----------------- | ---- | ---------- |
@@ -59,7 +58,7 @@ export interface GetLabelOptions {
 }
 ```
 
-- 示例代码
+**示例代码**
 
 ```js
 import { Option } from '@zlabnext/ztool';
@@ -91,30 +90,28 @@ const option = new Option({
 /* 2.更新数据 */
 // 添加一个对象
 dataSource.push({
-  label: '其他'，
-  value: 3
-})
-option.update({dataSource})
+  label: '其他',
+  value: 3,
+});
+option.update({ dataSource });
 // 清空
-option.update({dataSource: []})
+option.update({ dataSource: [] });
 ```
 
-### replaceEmpty
+### 空值替换
 
-空值替换
-
-- 语法
+**语法**
 
 `replaceEmpty(value, replaceStr)`
 
-- 参数说明
+**参数**
 
 | 字段       | 类型      | 默认 | 描述       |
 | ---------- | --------- | ---- | ---------- |
 | value      | `unknown` | -    | 原始值     |
 | replaceStr | `string`  | `--` | 空值占位符 |
 
-- 示例代码
+**示例代码**
 
 ```js
 import { replaceEmpty } from '@zlabnext/ztool';
@@ -127,33 +124,27 @@ console.log(replaceEmpty(true)); // true
 console.log(replaceEmpty(false)); // false
 ```
 
-### ~~downloadFile~~ <Badge type="danger" text="弃用" />
-
-下载文件
+### ~~下载文件~~ <Badge type="danger" text="弃用" />
 
 > [!NOTE]
 >
-> 请使用 [downloadFileV2](#downloadfilev2)
+> 请使用 [下载文件v2](#下载文件v2)
 
-### downloadFileV2
+### 下载文件v2
 
-下载文件
+**语法**
 
-- 语法
+`downloadFileV2(参数对象)`
 
-`downloadFileV2(options)`
+**参数**
 
-- 参数
+| 字段               | 类型                   | 默认 | 描述                                  |
+| ------------------ | ---------------------- | ---- | ------------------------------------- |
+| options.type       | `string`               | -    | 输入类型 (` 'url'`、`'arrayBuffer' `) |
+| options.filename   | `string`               | -    | 文件名称                              |
+| options.dataSource | `string / ArrayBuffer` | -    | 文件 url 或 arrayBuffer               |
 
-options
-
-| 字段       | 类型                   | 默认 | 描述                                  |
-| ---------- | ---------------------- | ---- | ------------------------------------- |
-| type       | `string`               | -    | 输入类型 (` 'url'`、`'arrayBuffer' `) |
-| filename   | `string`               | -    | 文件名称                              |
-| dataSource | `string / ArrayBuffer` | -    | 文件 url 或 arrayBuffer               |
-
-- 示例
+**示例代码**
 
 ```js
 import { downloadFileV2 } from '@zlabnext/ztool';
@@ -188,11 +179,9 @@ downloadFileV2({
 > - 如果是附件服务的资源地址，则正常下载 ( 前提，附件服务器已配置允许下载 )
 > - 如果 web 应用地址是 http 协议，则下载时浏览器会提示是否阻止下载 ( 浏览器的安全策略 )
 
-### getRandomRgb
+### 随机rgb色值
 
-随机 rgb 色值
-
-- 示例代码
+**示例代码**
 
 ```js
 import { getRandomRgb } from '@zlabnext/ztool';
@@ -200,11 +189,9 @@ import { getRandomRgb } from '@zlabnext/ztool';
 console.log(getRandomRgb()); // 获取一个随机的rgb色值，例：rgb(0, 0, 0)
 ```
 
-### getRandomHex
+### 随机hex色值
 
-随机 hex 色值
-
-- 示例代码
+**示例代码**
 
 ```js
 import { getRandomHex } from '@zlabnext/ztool';
@@ -212,11 +199,9 @@ import { getRandomHex } from '@zlabnext/ztool';
 console.log(getRandomHex()); // 获取一个随机的hex色值，例：#000000
 ```
 
-### getRandomColor
+### 随机rgb/hex色值
 
-随机 rgb / hex 色值
-
-- 示例代码
+**示例代码**
 
 ```js
 import { getRandomColor } from '@zlabnext/ztool';
@@ -225,22 +210,20 @@ console.log(getRandomColor({ type: 'rgb' })); // 获取一个随机的rgb色值�
 console.log(getRandomColor({ type: 'hex' })); // 获取一个随机的hex色值，例：#000000
 ```
 
-### convert2Webp
+### 图片转webp格式
 
-图片转 Webp 格式
-
-- 语法
+**语法**
 
 `convert2Webp(file, quality)`
 
-- 参数说明
+**参数**
 
 | 字段    | 类型           | 默认 | 描述           |
 | ------- | -------------- | ---- | -------------- |
 | file    | `File \| Blob` | -    | 文件对象       |
 | quality | `number`       | -    | 压缩率 `(0~1)` |
 
-- 示例代码
+**示例代码**
 
 ```js
 import { convert2Webp, downloadArrayBuffer } from '@zlabnext/ztool';
@@ -251,38 +234,35 @@ const webpBlob = convert2Webp(file, 0.6);
 downloadArrayBuffer(webpBlob, 'example.webp');
 ```
 
-### getFilenameFromUrl
+### 根据url获取文件名及后缀
 
-根据 url 获取文件名及后缀
-
-- 语法
+**语法**
 
 `getFilenameFromUrl(url)`
 
-- 参数说明
+**参数**
 
 | 字段 | 类型     | 默认 | 描述     |
 | ---- | -------- | ---- | -------- |
 | url  | `string` | -    | 文件链接 |
 
-- 示例代码
+**示例代码**
 
 ```js
 import { getFilenameFromUrl } from '@zlabnext/ztool';
 
 const url = 'https://www.baidu.com/abc.jpg';
+
 getFilenameFromUrl(url); // abc.jpg
 ```
 
-### getFilenameFromDisposition
+### 根据content-disposition获取文件名及后缀
 
-根据 content-disposition 获取文件名及后缀
+**语法**
 
-- 语法
+`getFilenameFromDisposition(contentDispotition, decode, decodeCallback)`
 
-`getFilenameFromDisposition(contentDispotition)`
-
-- 参数说明
+**参数**
 
 | 字段               | 类型       | 默认                 | 描述         |
 | ------------------ | ---------- | -------------------- | ------------ |
@@ -290,44 +270,51 @@ getFilenameFromUrl(url); // abc.jpg
 | decode             | `boolean`  | `true`               | 是否解码     |
 | decodeCallback     | `function` | `decodeURIComponent` | 解码回调函数 |
 
-- 示例代码
+**示例代码**
 
 ```js
 import { getFilenameFromDisposition } from '@zlabnext/ztool';
 
-console.log(getFilenameFromDisposition('attachment; filename="example.txt"')); // 'example.txt'
-console.log(getFilenameFromDisposition('attachment; filename=example.txt')); // 'example.txt'
-console.log(getFilenameFromDisposition('attachment; filename*=UTF-8''%e4%b8%ad%e6%96%87.txt')); // '中文.txt'
-console.log(getFilenameFromDisposition('attachment')); // null
-console.log(getFilenameFromDisposition(null)); // null
+// 'example.txt'
+console.log(getFilenameFromDisposition('attachment; filename="example.txt"'));
+// 'example.txt'
+console.log(getFilenameFromDisposition('attachment; filename=example.txt'));
+// '中文.txt'
+console.log(
+  getFilenameFromDisposition(
+    "attachment; filename*=UTF-8''%e4%b8%ad%e6%96%87.txt",
+  ),
+);
+// null
+console.log(getFilenameFromDisposition('attachment'));
+// null
+console.log(getFilenameFromDisposition(null));
 ```
 
-### ~~Compatibility~~ <Badge type="danger" text="废弃" />
-
-浏览器兼容性提示
+### ~~浏览器兼容性提示~~ <Badge type="danger" text="废弃" />
 
 > [!NOTE]
 >
 > 推荐使用 [bowser](https://github.com/bowser-js/bowser?tab=readme-ov-file)
 
-### splitDateRange
+### 拆分日期区间
 
-拆分日期区间，一般用来提交给后端。
+一般用来提交给后端
 
-- 语法
+**语法**
 
 `splitDateRange(options)`
 
-- options 属性
+**参数**
 
-| 字段          | 类型             | 必填 | 默认      | 描述               |
-| ------------- | ---------------- | ---- | --------- | ------------------ |
-| dateRange     | `string[]`       | 是   | -         | 日期区间           |
-| outStartField | `string`         | 否   | startDate | 输出的开始日期字段 |
-| outEndField   | `string`         | 否   | endDate   | 输出的结束日期字段 |
-| defaultValue  | `string \| null` | 否   | null      | 默认值             |
+| 字段                  | 类型             | 必填 | 默认      | 描述               |
+| --------------------- | ---------------- | ---- | --------- | ------------------ |
+| options.dateRange     | `string[]`       | 是   | -         | 日期区间           |
+| options.outStartField | `string`         | 否   | startDate | 输出的开始日期字段 |
+| options.outEndField   | `string`         | 否   | endDate   | 输出的结束日期字段 |
+| options.defaultValue  | `string \| null` | 否   | null      | 默认值             |
 
-- 示例代码
+**示例代码**
 
 ```js
 import { splitDateRange } from '@zlabnext/ztool';
@@ -339,15 +326,15 @@ const result = splitDateRange({
 console.log(result); // { startDate: '2024-11-13', endDate: '2024-11-14' }
 ```
 
-### combineDateRange
+### 组合日期区间
 
-组合日期区间，一般用来给前端回显。
+一般用来给前端回显。
 
-- 语法
+**语法**
 
 `combineDateRange(options)`
 
-- options 属性
+**参数**
 
 | 字段         | 类型                             | 必填 | 默认      | 描述               |
 | ------------ | -------------------------------- | ---- | --------- | ------------------ |
@@ -355,7 +342,7 @@ console.log(result); // { startDate: '2024-11-13', endDate: '2024-11-14' }
 | inStartField | `string`                         | 否   | startDate | 输入的开始日期字段 |
 | inEndField   | `string`                         | 否   | endDate   | 输入的结束日期字段 |
 
-- 示例代码
+**示例代码**
 
 ```js
 import { combineDateRange } from '@zlabnext/ztool';
@@ -367,26 +354,24 @@ const result = combineDateRange({
 console.log(result); // ['2024-11-13', '2024-11-14']
 ```
 
-### fmtAddressStr
+### 格式化地址字符串
 
-格式化地址字符串
-
-- 语法
+**语法**
 
 `fmtAddressStr(options)`
 
-- options 属性
+**参数**
 
-| 字段        | 类型       | 必填 | 默认 | 描述                             |
-| ----------- | ---------- | ---- | ---- | -------------------------------- |
-| addressStr  | `string`   | 是   | -    | 原始地址字符串                   |
-| needSplit   | `boolean`  | 否   | true | 是否需要分隔                     |
-| splitFlag   | `boolean`  | 否   | true | 分隔符                           |
-| needJoin    | `boolean`  | 否   | true | 是否需要拼接                     |
-| joinFlag    | `string`   | 否   | ,    | 拼接符                           |
-| extraStrArr | `string[]` | 否   |      | 额外的字符串数组(例如，详情地址) |
+| 字段                | 类型       | 必填 | 默认 | 描述                             |
+| ------------------- | ---------- | ---- | ---- | -------------------------------- |
+| options.addressStr  | `string`   | 是   | -    | 原始地址字符串                   |
+| options.needSplit   | `boolean`  | 否   | true | 是否需要分隔                     |
+| options.splitFlag   | `boolean`  | 否   | true | 分隔符                           |
+| options.needJoin    | `boolean`  | 否   | true | 是否需要拼接                     |
+| options.joinFlag    | `string`   | 否   | ,    | 拼接符                           |
+| options.extraStrArr | `string[]` | 否   |      | 额外的字符串数组(例如，详情地址) |
 
-- 示例代码
+**示例代码**
 
 ```js
 import { fmtAddressStr } from '@zlabnext/ztool';
@@ -402,20 +387,20 @@ const result = fmtAddressStr({
 console.log(result); // 山东省青岛市崂山区xx街道xx号
 ```
 
-### arrToStr
+### 数组转字符串
 
-数组转字符串
-
-- 语法
+**语法**
 
 `arrToStr(str, joinFlag)`
+
+**参数**
 
 | 字段     | 类型     | 必填 | 默认 | 描述       |
 | -------- | -------- | ---- | ---- | ---------- |
 | str      | `string` | 是   | -    | 原始字符串 |
 | joinFlag | `string` | 否   | ,    | 拼接符     |
 
-- 示例代码
+**示例代码**
 
 ```js
 import { arrToStr } from '@zlabnext/ztool';
@@ -427,19 +412,20 @@ const result2 = arrToStr(['1', '2', '3'], '');
 console.log(result2); // 123
 ```
 
-### strToArr
+### 字符串转数组
 
-字符串转数组
+**语法**
 
-- 语法
-  `strToArr(str, splitFlag)`
+`strToArr(str, splitFlag)`
 
-  | 字段      | 类型     | 必填 | 默认 | 描述       |
-  | --------- | -------- | ---- | ---- | ---------- |
-  | str       | `string` | 是   | -    | 原始字符串 |
-  | splitFlag | `string` | 否   | ,    | 拼接符     |
+**参数**
 
-- 示例代码
+| 字段      | 类型     | 必填 | 默认 | 描述       |
+| --------- | -------- | ---- | ---- | ---------- |
+| str       | `string` | 是   | -    | 原始字符串 |
+| splitFlag | `string` | 否   | ,    | 拼接符     |
+
+**示例代码**
 
 ```js
 import { strToArr } from '@zlabnext/ztool';

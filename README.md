@@ -1,38 +1,31 @@
 # ztool
 
-A js tool library
+## 特性
 
-## Features
+- [x] 表合并计算
+- [x] 字典映射
+- [x] 空值替换
+- [x] 日期数组分割/合并
+- [x] 下载文件
 
-- [x] Table merge calculation
-- [x] Map Dictionary
-- [x] Null value replacement
-- [x] Split/combine date arrays
-- [x] Downloading the file
-
-## Install
+## 安装
 
 ```bash
-# npm
+# npm安装
 $ npm i @zlabnext/ztool -S
 
-# yarn
+# yarn安装
 $ yarn add @zlabnext/ztool -S
 
-# pnpm
+# pnpm安装
 $ pnpm add @zlabnext/ztool -S
 ```
 
-## API
+## API文档
 
-- [Merger API](./docs/en/merger.md)
-- [Tools API](./docs/en/tools.md)
+- [表格合并](./docs/zh/merger.md)
+- [工具函数](./docs/zh/tools.md)
 
-## Other
+## 最后
 
-- [中文文档](./README.zh.md)
-
-## Finally
-
-- The English document translation was provided by [Grok](https://grok.com/) .
-- If `ztool` is helpful, you can click [Star](https://github.com/Z-LabNext/ztool.git) .
+如果ztool对您有所帮助，可以 [Star](https://github.com/Z-LabNext/ztool.git) 支持我们！
