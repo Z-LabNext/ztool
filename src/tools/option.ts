@@ -7,7 +7,7 @@ import type {
   GetLabelOptions,
 } from '../models/option/option.interfaces';
 import { DefaultReplaceStr, replaceEmpty } from './string';
-import { warn } from '../utils/warning';
+import { warn } from '../utils';
 
 export const DefaultFieldsName: FieldsName = { label: 'label', value: 'value' };
 

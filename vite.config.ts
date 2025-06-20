@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
 import type { UserConfig } from 'vite';
 import dts from 'vite-plugin-dts';
@@ -60,5 +61,9 @@ export default defineConfig(({ mode }) => {
       minify: isProd,
     },
     plugins: [dts({ tsconfigPath: './tsconfig.json', outDir: './dist/types' })],
+    test: {
+      browser: {},
+      watch: false,
+    },
   } as UserConfig;
 });

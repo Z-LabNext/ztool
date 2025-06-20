@@ -5,7 +5,7 @@ import {
   type CombineDateRangeOptions,
   type CombineDateRangeReturn,
 } from '../models/params/params.interfaces';
-import { warn } from '../utils/warning';
+import { warn } from '../utils';
 import { DEFAULT_FIELDS } from '../models/params/params.constants';
 
 /**

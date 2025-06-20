@@ -115,6 +115,10 @@
       <h2>在线图片</h2>
       <button id="testBtn">下载webp</button>
     </section>
+    <section>
+      <h2>接口错误捕获</h2>
+      <button id="errorTrapBtn">测试接口</button>
+    </section>
 
     <script type="module">
       import * as tools from '../../dist/es/ztool.min.js';
@@ -312,6 +316,22 @@
           joinFlag: ',',
         }),
       );
+
+      const errorTrapBtn = document.getElementById('errorTrapBtn');
+      tools.setErrorTrapGlobalConfig({
+        successCode: 0,
+        successCallback: (code, message) =>
+          alert(`successCallback ${code} ${message}`),
+        errorCode: 1,
+        errorCallback: (code, message) =>
+          alert(`errorCallback ${code} ${message}`),
+      });
+      errorTrapBtn.addEventListener('click', () => {
+        const code = Math.floor(Math.random() * 2);
+        const message = code === 0 ? '请求成功' : '请求失败';
+        const hasErr = tools.errorTrap({ code, message });
+        console.log('hasErr', hasErr, code);
+      });
     </script>
   </body>
 </html>

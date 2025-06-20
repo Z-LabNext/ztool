@@ -1,5 +1,5 @@
 import { isArrayBuffer, isString } from 'lodash-es';
-import { warn } from '../utils/warning';
+import { warn } from '../utils';
 import {
   type DownloadFileOpts,
   type DownloadFileV2Opts,

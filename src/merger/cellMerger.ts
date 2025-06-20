@@ -25,7 +25,7 @@ import {
   validateColumns,
   validateMergeFields,
 } from '../models/merger/merger.helpers';
-import { warn } from '../utils/warning';
+import { warn } from '../utils';
 
 /**
  * 单元格合并计算类
