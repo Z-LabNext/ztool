@@ -1,5 +1,6 @@
 dist
 node_modules
-.vscode
+.vscode/*
+!.vscode/settings.json
 .DS_Store
 .idea
