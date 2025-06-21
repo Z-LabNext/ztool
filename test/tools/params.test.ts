@@ -53,6 +53,12 @@ describe('params', () => {
     expect(str).toBe('a,b,c');
   });
 
+  test('数组转字符串(自定义默认值)', () => {
+    const obj: any = undefined;
+    const str = arrToStr(obj, ',', '[]');
+    expect(str).toBe('[]');
+  });
+
   test('空数组转字符串', () => {
     const arr: string[] = [];
     const str = arrToStr(arr);
@@ -71,22 +77,20 @@ describe('params', () => {
     const targetArr = ['a', 'b', 'c'];
     const str = 'a,b,c';
     const arr = strToArr(str);
-    const result: boolean[] = [];
-    for (let i = 0; i < arr.length; i++) {
-      result.push(arr[i] === targetArr[i]);
-    }
-    expect(result.indexOf(false) === -1).toBe(true);
+    expect(arr).toEqual(targetArr);
+  });
+
+  test('字符串转数组(自定义默认值)', () => {
+    const str: any = undefined;
+    const arr = strToArr(str, ',', [1]);
+    expect(arr).toEqual([1]);
   });
 
   test('空字符串转数组', () => {
     const targetArr = [];
     const str = '';
     const arr = strToArr(str);
-    const result: boolean[] = [];
-    for (let i = 0; i < arr.length; i++) {
-      result.push(arr[i] === targetArr[i]);
-    }
-    expect(result.indexOf(false) === -1).toBe(false);
+    expect(arr).toEqual(targetArr);
   });
 
   test('非字符串类型转数组', () => {
