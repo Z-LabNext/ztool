@@ -29,18 +29,17 @@ describe('url', () => {
   it('如果Content-Disposition不包含filename，则返回null', () => {
     const contentDisposition = 'attachment';
     const filename = getFilenameFromDisposition(contentDisposition);
-    expect(filename).toBeNull();
+    expect(filename).toBeUndefined();
   });
 
   it('如果Content-Disposition为空，应该返回null', () => {
     const contentDisposition = '';
     const filename = getFilenameFromDisposition(contentDisposition);
-    expect(filename).toBeNull();
+    expect(filename).toBeUndefined();
   });
 
   it('如果Content-Disposition没有定义，应该返回null吗', () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const filename = getFilenameFromDisposition(null as any);
-    expect(filename).toBeNull();
+    expect(filename).toBeUndefined();
   });
 });

@@ -1,10 +1,11 @@
 import { isArrayBuffer, isString } from 'lodash-es';
-import { warn } from '../utils';
+import { fmtErrorMsg, warn } from '../utils';
 import {
   type DownloadFileOpts,
   type DownloadFileV2Opts,
 } from '../models/file/file.interfaces';
 import { InputType } from '../models/file/file.enums';
+import { getFilenameFromDisposition, getFilenameFromUrl } from './url';
 
 /**
  * 下载文件(arrayBuffer)
@@ -16,11 +17,11 @@ export function downloadArrayBuffer(
   try {
     const blob = new Blob([stream], { type: 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.target = '_blank';
-    a.click();
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.target = '_blank';
+    link.click();
     URL.revokeObjectURL(url);
     return true;
   } catch (e: any) {
@@ -82,14 +83,14 @@ export function convert2Webp(file: File | Blob, quality = 0.8): Promise<Blob> {
  */
 export function downloadUrl(url: string, filename: string): boolean {
   try {
-    const a = document.createElement('a');
-    a.href = url;
-    a.setAttribute('download', filename);
-    a.target = '_blank';
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    link.target = '_blank';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     return true;
   } catch (e: any) {
     warn(`下载文件失败 ${e.message}`);
@@ -126,21 +127,41 @@ export function downloadFile(options: DownloadFileOpts): boolean {
  * 下载文件 v2
  */
 export function downloadFileV2(options: DownloadFileV2Opts): boolean {
-  const { type = InputType.URL, filename, dataSource } = options;
-  if (!isString(filename)) {
+  const {
+    type = InputType.URL,
+    filename,
+    dataSource,
+    autoPickFilename,
+    disposition,
+  } = options;
+  let localFilename = filename;
+
+  // 检测文件名是否传入
+  if (!autoPickFilename && !isString(localFilename)) {
     warn('filename 不能为空');
     return false;
   }
+
+  // 从arrayBuffer中下载
   if (type === InputType.ArrayBuffer) {
     if (!isArrayBuffer(dataSource)) {
-      warn('dataSource 不能为空');
-      return false;
+      throw new Error(fmtErrorMsg('dataSource 不能为空'));
     }
-    return downloadArrayBuffer(dataSource, filename);
+    if (autoPickFilename && disposition) {
+      localFilename = getFilenameFromDisposition(disposition);
+      if (!isString(localFilename)) {
+        throw new Error(fmtErrorMsg(`未能从${disposition}解析出文件名`));
+      }
+    }
+    return downloadArrayBuffer(dataSource, localFilename as string);
   }
+
+  // 从url中下载
   if (!isString(dataSource)) {
-    warn('dataSource 不能为空');
-    return false;
+    throw new Error(fmtErrorMsg('dataSource 不能为空'));
   }
-  return downloadUrl(dataSource, filename);
+  if (autoPickFilename) {
+    localFilename = getFilenameFromUrl(dataSource);
+  }
+  return downloadUrl(dataSource, localFilename as string);
 }

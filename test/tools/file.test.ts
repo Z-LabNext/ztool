@@ -63,6 +63,17 @@ describe('file', () => {
     expect(result).toBe(true);
   });
 
+  test('下载文件v2(传入url,自动提取filename)', () => {
+    const url = 'https://s2.loli.net/2024/04/26/z9NEnaI7lJqwrx5.png';
+    const filename = 'test.png';
+    const result = downloadFileV2({
+      type: InputType.URL,
+      dataSource: url,
+      autoPickFilename: true,
+    });
+    expect(result).toBe(true);
+  });
+
   test('下载文件v2(传入arrayBuffer)', () => {
     const arrayBuffer = new ArrayBuffer(8);
     const filename = 'test.txt';
@@ -70,6 +81,17 @@ describe('file', () => {
       type: InputType.ArrayBuffer,
       filename,
       dataSource: arrayBuffer,
+    });
+    expect(result).toBe(true);
+  });
+
+  test('下载文件v2(传入arrayBuffer,自动提取filename)', () => {
+    const arrayBuffer = new ArrayBuffer(8);
+    const filename = 'test.txt';
+    const result = downloadFileV2({
+      type: InputType.ArrayBuffer,
+      dataSource: arrayBuffer,
+      autoPickFilename: true,
     });
     expect(result).toBe(true);
   });

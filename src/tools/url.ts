@@ -14,14 +14,14 @@ export function getFilenameFromUrl(url: string): string {
 }
 
 /**
- * 从content-disposition中获取文件ming
+ * 从content-disposition中获取文件名
  */
 export function getFilenameFromDisposition(
   contentDisposition: string,
   decode = true,
   decodeCallback = decodeURIComponent,
-): string | null {
-  if (!isString(contentDisposition)) return null;
+): string | undefined {
+  if (!isString(contentDisposition)) return undefined;
 
   // 尝试解析 `filename*`（使用RFC 5987编码）
   const filenameStarMatch = contentDisposition.match(/filename\*=[^;]+/);
@@ -47,5 +47,5 @@ export function getFilenameFromDisposition(
       : filenameMatchUnquoted[1];
   }
 
-  return null;
+  return undefined;
 }

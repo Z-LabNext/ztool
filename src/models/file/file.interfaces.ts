@@ -35,9 +35,17 @@ export interface DownloadFileV2Opts {
   /**
    * 文件名
    */
-  filename: string;
+  filename?: string;
   /**
    * 数据源
    */
   dataSource: string | ArrayBuffer;
+  /**
+   * 自动提取文件名
+   */
+  autoPickFilename?: boolean;
+  /**
+   * 如果是arrayBuffer类型，则需要传入'content-disposition'
+   */
+  disposition?: string;
 }

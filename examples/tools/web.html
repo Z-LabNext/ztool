@@ -106,6 +106,8 @@
     <section>
       <h2>下载文件</h2>
       <button id="downloadFileBtn">Download</button>
+      <button id="downloadUrlBtn">Download Url (自动提取文件名)</button>
+      <button id="downloadAbBtn">Download ArrayBuffer (自动提取文件名)</button>
     </section>
     <section>
       <h2>转换为Webp</h2>
@@ -160,6 +162,43 @@
         //   url,
         //   filename,
         // })
+      });
+
+      const downloadUrlBtn = document.getElementById('downloadUrlBtn');
+      downloadUrlBtn.addEventListener('click', () => {
+        const img = new Image();
+        img.src = 'https://s2.loli.net/2024/04/26/z9NEnaI7lJqwrx5.png';
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          const url = canvas.toDataURL();
+          const filename = tools.getFilenameFromUrl(img.src);
+          tools.downloadFileV2({
+            type: 'url',
+            dataSource: url,
+            filename,
+          });
+        };
+      });
+
+      const downloadAbBtn = document.getElementById('downloadAbBtn');
+      downloadAbBtn.addEventListener('click', () => {
+        const str = '大道泛兮，其可左右。';
+        const encoder = new TextEncoder();
+        const encodedData = encoder.encode(str);
+        const buffer = new ArrayBuffer(encodedData.byteLength);
+        const uint8Array = new Uint8Array(buffer);
+        uint8Array.set(encodedData);
+        tools.downloadFileV2({
+          type: 'arrayBuffer',
+          dataSource: buffer,
+          autoPickFilename: true,
+          disposition: 'attachment; filename="example.txt"',
+        });
       });
 
       const dataSource = [
