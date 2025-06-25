@@ -1,14 +1,10 @@
 # ztool
 
-## 特性
+> 一个轻量、高效的前端工具库，提供常用工具函数，适用于现代 Web 开发。
 
-- [x] 表合并计算
-- [x] 字典映射
-- [x] 空值替换
-- [x] 日期数组分割/合并
-- [x] 下载文件
+[开发文档](https://z-labnext.github.io/Z-LabNext/ztool/tool/quick-start.html)
 
-## 安装
+## 📦 安装
 
 ```bash
 # npm安装
@@ -20,12 +16,3 @@ $ yarn add @zlabnext/ztool -S
 # pnpm安装
 $ pnpm add @zlabnext/ztool -S
 ```
-
-## API文档
-
-- [表格合并](./docs/zh/merger.md)
-- [工具函数](./docs/zh/tools.md)
-
-## 最后
-
-如果ztool对您有所帮助，可以 [Star](https://github.com/Z-LabNext/ztool.git) 支持我们！
