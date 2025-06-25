@@ -10,8 +10,7 @@
     "build": "vite build",
     "prettier": "prettier . --write",
     "prepare": "husky",
-    "mh:server": "node ./examples/merger/server.js",
-    "publish": "pnpm run build && pnpm publish"
+    "mh:server": "node ./examples/merger/server.js"
   },
   "keywords": ["table-merge", "tools"],
   "author": "Jinming6",
