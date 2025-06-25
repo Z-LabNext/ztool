@@ -1,5 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import { DefaultReplaceStr, Option } from '../../src/main';
+import { DataSourceItem } from '../../src/models/option/option.interfaces';
 
 describe('option', () => {
   const dataSource = [
@@ -20,21 +21,39 @@ describe('option', () => {
     dataSource,
   });
 
-  test('克隆数据源', () => {
-    expect(dataSource === option.options).toBe(false);
-  });
-
   test('下拉选项', () => {
-    expect(JSON.stringify(dataSource) === JSON.stringify(option.options)).toBe(
-      true,
-    );
+    expect(dataSource).toEqual(option.options);
   });
 
-  test('value映射为label', () => {
-    const labelKeys = dataSource.map((item) => item.value);
-    for (const key in option.labelMap) {
-      expect(labelKeys.includes(Number(key))).toBe(true);
-    }
+  test('value映射为label文本', () => {
+    const labels: DataSourceItem['label'][] = [];
+    const values: DataSourceItem['value'][] = [];
+    dataSource.forEach((item) => {
+      labels.push(item.label);
+      values.push(item.value);
+    });
+    const result = values.map((value, index) => {
+      return option.getLabelTextByValue(value) === labels[index];
+    });
+    expect(result.indexOf(false) === -1).toBe(true);
+  });
+
+  test('value映射为下拉选项', () => {
+    const values = dataSource.map((item) => item.value);
+    const result = values.map((value, index) => {
+      const item = option.getItemByValue(value);
+      return item === option.options[index];
+    });
+    expect(result.indexOf(false) === -1).toBe(true);
+  });
+
+  test('label映射为下拉选项', () => {
+    const labels = dataSource.map((item) => item.label);
+    const result = labels.map((label, index) => {
+      const item = option.getItemByLabel(label);
+      return item === option.options[index];
+    });
+    expect(result.indexOf(false) === -1).toBe(true);
   });
 
   test('更新数据源', () => {
@@ -45,7 +64,6 @@ describe('option', () => {
     option.update({
       dataSource,
     });
-
     expect(dataSource.length === option.options.length).toBe(true);
   });
 
@@ -59,9 +77,7 @@ describe('option', () => {
     const options = new Option({
       dataSource: emptyDataSource,
     });
-
-    const result = options.getLabel({ key: 'foo', allowReplaceEmpty: true });
-
+    const result = options.getLabelTextByValue('foo', true);
     expect(result).toBe(DefaultReplaceStr);
   });
 });

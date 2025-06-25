@@ -1,26 +1,37 @@
-import { cloneDeep, isArray, isPlainObject } from 'lodash-es';
+import { isArray, isPlainObject } from 'lodash-es';
 import type {
-  LabelMap,
   Options,
   DataSourceItem,
   FieldsName,
   GetLabelOptions,
 } from '../models/option/option.interfaces';
 import { DefaultReplaceStr, replaceEmpty } from './string';
-import { warn } from '../utils';
+import { fmtErrorMsg, warn } from '../utils';
 
 export const DefaultFieldsName: FieldsName = { label: 'label', value: 'value' };
 
 export class Option {
+  /**
+   * 数据源
+   */
   dataSource: DataSourceItem[] = [];
+  /**
+   * label、value对应的字段名
+   */
   fieldsName: FieldsName = DefaultFieldsName;
+  /**
+   * 标签映射为选项
+   */
+  labelMap: Record<DataSourceItem['label'], DataSourceItem> = {};
+  /**
+   * 值映射为选项
+   */
+  valueMap: Record<DataSourceItem['value'], DataSourceItem> = {};
 
   constructor(options: Options) {
-    const { dataSource, fieldsName } = options;
-    this.dataSource = isArray(dataSource) ? cloneDeep(dataSource) : [];
-    this.fieldsName = isPlainObject(fieldsName)
-      ? (fieldsName as FieldsName)
-      : DefaultFieldsName;
+    const { dataSource, fieldsName = DefaultFieldsName } = options;
+    this.setDataSource(dataSource);
+    this.setFieldsName(fieldsName);
   }
 
   /**
@@ -31,38 +42,93 @@ export class Option {
   }
 
   /**
-   * 获取label映射对象
+   * 设置dataSource
    */
-  get labelMap(): LabelMap {
-    const map: Record<DataSourceItem['value'], DataSourceItem['label']> = {};
-    this.dataSource.forEach((item) => {
-      if (this.fieldsName.value in item && this.fieldsName.label in item) {
-        const key = item[this.fieldsName.value as keyof typeof item];
-        const label = item[
-          this.fieldsName.label as keyof typeof item
-        ] as DataSourceItem['label'];
-        map[key] = label;
+  setDataSource(newDataSource: DataSourceItem[]) {
+    this.labelMap = {};
+    this.valueMap = {};
+
+    if (!isArray(newDataSource)) {
+      throw new Error(fmtErrorMsg('newDataSource必须为数组类型'));
+    }
+    if (newDataSource.length < 1) {
+      return;
+    }
+
+    for (let i = 0; i < newDataSource.length; i++) {
+      const item = newDataSource[i];
+      // 生成labelMap
+      if (!(item.label in this.labelMap)) {
+        this.labelMap[item.label] = item;
       }
-    });
-    return map;
+      // 生成valueMap
+      if (!(item.value in this.valueMap)) {
+        this.valueMap[item.value] = item;
+      }
+    }
+    this.dataSource = newDataSource;
+  }
+
+  /**
+   * 设置fieldsName
+   */
+  setFieldsName(newFieldsName: FieldsName) {
+    if (!isPlainObject(newFieldsName)) {
+      return;
+    }
+    this.fieldsName = newFieldsName;
   }
 
   /**
    * 获取label
+   * @deprecated 推荐使用 getLabelTextByValue
    */
   getLabel(options: GetLabelOptions): string {
     if (!isPlainObject(options)) {
-      warn('getLabel的参数必须是一个对象');
+      throw new Error(fmtErrorMsg('getLabel的参数必须是一个对象'));
     }
     const {
       key,
       allowReplaceEmpty = false,
       replaceStr = DefaultReplaceStr,
     } = options;
-    const label = this.labelMap[key];
-    return allowReplaceEmpty
-      ? (replaceEmpty(label, replaceStr) as string)
-      : label;
+    const item = this.labelMap[key];
+    const label = isPlainObject(item) ? item.label : '';
+    if (allowReplaceEmpty) {
+      return replaceEmpty(label, replaceStr) as string;
+    }
+    return label;
+  }
+
+  /**
+   * 根据value来获取对应的下拉选项
+   */
+  getItemByValue(value: DataSourceItem['value']): DataSourceItem | undefined {
+    return this.valueMap[value];
+  }
+
+  /**
+   * 根据label来获取对应的下拉选项
+   */
+  getItemByLabel(label: DataSourceItem['label']): DataSourceItem | undefined {
+    return this.labelMap[label];
+  }
+
+  /**
+   * 根据value来获取对应的label文本
+   */
+  getLabelTextByValue(
+    value: DataSourceItem['value'],
+    allowReplaceEmpty = false,
+    replaceStr = DefaultReplaceStr,
+  ): DataSourceItem['label'] {
+    const item = this.getItemByValue(value);
+    if (!item) {
+      return allowReplaceEmpty
+        ? (replaceEmpty('', replaceStr) as DataSourceItem['label'])
+        : '';
+    }
+    return item.label;
   }
 
   /**
@@ -70,14 +136,10 @@ export class Option {
    */
   update(options: Options): void {
     if (!isPlainObject(options)) {
-      warn('update的参数必须是一个对象');
+      throw new Error(fmtErrorMsg('update的参数必须是一个对象'));
     }
-    const { dataSource, fieldsName } = options;
-    if (isArray(dataSource)) {
-      this.dataSource = cloneDeep(dataSource);
-    }
-    if (isPlainObject(fieldsName)) {
-      this.fieldsName = fieldsName as FieldsName;
-    }
+    const { dataSource, fieldsName = DefaultFieldsName } = options;
+    this.setDataSource(dataSource);
+    this.setFieldsName(fieldsName);
   }
 }

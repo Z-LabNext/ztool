@@ -19,8 +19,6 @@ export interface Options {
   fieldsName?: FieldsName;
 }
 
-export type LabelMap = Record<DataSourceItem['value'], DataSourceItem['label']>;
-
 export interface GetLabelOptions {
   key: string;
   allowReplaceEmpty?: boolean;
