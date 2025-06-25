@@ -1,6 +1,6 @@
 {
   "name": "@zlabnext/ztool",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -12,7 +12,10 @@
     "prepare": "husky",
     "mh:server": "node ./examples/merger/server.js"
   },
-  "keywords": ["table-merge", "tools"],
+  "keywords": [
+    "table-merge",
+    "tools"
+  ],
   "author": "Jinming6",
   "license": "MIT",
   "type": "module",
