@@ -12,7 +12,7 @@ const FORMAT_TYPE = {
 
 function fmtEntryFileNames(format: string, entryName: string): string {
   const ext = format === FORMAT_TYPE.es ? 'js' : 'cjs';
-  return `${format}/${entryName}.min.${ext}`;
+  return `${format}/[name].min.${ext}`;
 }
 
 function getPkgJson() {
@@ -28,7 +28,6 @@ function manualChunks(format: string, id: string) {
 }
 
 export default defineConfig(({ mode }) => {
-  const entry = resolve(__dirname, './src/main.ts');
   const pkgJson = getPkgJson();
   const isProd = mode === 'production';
   const name = 'ztool';
@@ -42,7 +41,9 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'es6',
       lib: {
-        entry,
+        entry: {
+          [name]: resolve(__dirname, './src/main.ts'),
+        },
       },
       rollupOptions: {
         output: [
