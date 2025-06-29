@@ -66,5 +66,10 @@ export default defineConfig(({ mode }) => {
       browser: {},
       watch: false,
     },
+    resolve: {
+      alias: {
+        '@': '/src',
+      },
+    },
   } as UserConfig;
 });
