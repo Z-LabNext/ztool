@@ -122,7 +122,7 @@ export class Option {
         ? (replaceEmpty('', replaceStr) as DataSourceItem['label'])
         : '';
     }
-    return item.label;
+    return item[this.labelKey];
   }
 
   /**
