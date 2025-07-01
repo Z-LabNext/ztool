@@ -217,22 +217,20 @@
       ];
       const option = new tools.Option({ dataSource });
       console.log(option);
-      console.log(
-        'getLabel1',
-        option.getLabel({ key: 3, allowReplaceEmpty: true }),
-      );
-      console.log(
-        'getLabel2',
-        option.getLabel({ key: 3, allowReplaceEmpty: true, replaceStr: '~~' }),
-      );
-      console.log('getLabel3', option.getLabel({ key: 1 }));
+      console.log('getLabel1', option.getLabelTextByValue(3, true));
+      console.log('getLabel2', option.getLabelTextByValue(3, true, '~~~'));
+      console.log('getLabel3', option.getLabelTextByValue(1));
+      console.log('getLabel3', option.getItemByValue(1));
       setTimeout(() => {
-        dataSource.push({
-          label: '继续',
-          value: 3,
+        // dataSource.push({
+        //   name: '继续',
+        //   code: 3,
+        // });
+        option.update({
+          dataSource: [{ name: '继续', code: 3 }],
+          fieldsName: { label: 'name', value: 'code' },
         });
-        option.update({ dataSource });
-        console.log(option);
+        console.log('update', option);
       }, 1000);
 
       const fileInput = document.getElementById('fileInput');

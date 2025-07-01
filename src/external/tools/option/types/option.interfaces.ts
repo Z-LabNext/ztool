@@ -1,7 +1,4 @@
-export interface DataSourceItem {
-  label: string;
-  value: string | number;
-}
+import { DataSourceItem } from '@/external/merger/types/merger.types';
 
 export interface FieldsName {
   label: string;

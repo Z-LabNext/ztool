@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import { DefaultReplaceStr, Option } from '@/main';
-import { DataSourceItem } from '@/external/tools/option/types/option.interfaces';
+import { DataSourceItem } from '@/external/tools/option/types/option.types';
 
 describe('option', () => {
   const dataSource = [
