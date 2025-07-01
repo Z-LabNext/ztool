@@ -14,7 +14,7 @@ export class Option {
   /**
    * label、value对应的字段名
    */
-  fieldsName: FieldsName = DefaultFieldsName;
+  fieldsName?: FieldsName;
   /**
    * 标签映射为选项
    */
@@ -31,11 +31,17 @@ export class Option {
   }
 
   get labelKey() {
-    return this.fieldsName.label;
+    if (!isPlainObject(this.fieldsName)) {
+      return '';
+    }
+    return (this.fieldsName as FieldsName).label;
   }
 
   get valueKey() {
-    return this.fieldsName.value;
+    if (!isPlainObject(this.fieldsName)) {
+      return '';
+    }
+    return (this.fieldsName as FieldsName).value;
   }
 
   /**
@@ -77,11 +83,11 @@ export class Option {
   /**
    * 设置fieldsName
    */
-  setFieldsName(newFieldsName: FieldsName) {
+  setFieldsName(newFieldsName?: FieldsName) {
     if (!isPlainObject(newFieldsName)) {
       return;
     }
-    this.fieldsName = newFieldsName;
+    this.fieldsName = newFieldsName as FieldsName;
   }
 
   /**
@@ -126,7 +132,7 @@ export class Option {
     if (!isPlainObject(options)) {
       throw new Error(fmtErrorMsg('update的参数必须是一个对象'));
     }
-    const { dataSource, fieldsName = DefaultFieldsName } = options;
+    const { dataSource, fieldsName } = options;
     this.setFieldsName(fieldsName);
     this.setDataSource(dataSource);
   }

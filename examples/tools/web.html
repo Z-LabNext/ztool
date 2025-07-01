@@ -201,21 +201,23 @@
         });
       });
 
-      const dataSource = [
-        {
-          label: '关闭',
-          value: 0,
-        },
-        {
-          label: '开启',
-          value: 1,
-        },
-        {
-          label: '暂停',
-          value: 2,
-        },
-      ];
-      const option = new tools.Option({ dataSource });
+      const option = new tools.Option({
+        dataSource: [
+          {
+            name: '关闭',
+            code: 0,
+          },
+          {
+            name: '开启',
+            code: 1,
+          },
+          {
+            name: '暂停',
+            code: 2,
+          },
+        ],
+        fieldsName: { label: 'name', value: 'code' },
+      });
       console.log(option);
       console.log('getLabel1', option.getLabelTextByValue(3, true));
       console.log('getLabel2', option.getLabelTextByValue(3, true, '~~~'));
@@ -227,8 +229,8 @@
         //   code: 3,
         // });
         option.update({
-          dataSource: [{ name: '继续', code: 3 }],
-          fieldsName: { label: 'name', value: 'code' },
+          dataSource: [{ label: '继续', code: 3 }],
+          fieldsName: { label: 'label', value: 'code' },
         });
         console.log('update', option);
       }, 1000);
