@@ -42,7 +42,16 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      # 调试步骤：验证令牌（运行后可删除）
+      - name: Debug npm auth
+        run: |
+          pnpm whoami
+          echo "Token injected: $([ -n '${{ secrets.NPM_TOKEN }}' ] && echo 'Yes' || echo 'No')"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       # 发布到 npm
       - run: pnpm publish --no-git-checks
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
