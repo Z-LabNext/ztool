@@ -26,8 +26,6 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-          # 如果你使用 pnpm + npm 发布，需要这一行让 npm token 生效
-          always-auth: true
 
       # 安装依赖
       - run: pnpm install
@@ -35,8 +33,14 @@ jobs:
       # 构建
       - run: pnpm run build
 
-      # 测试（如果有）
+      # 测试
       - run: pnpm test
+
+      # 创建 .npmrc 文件注入 npm 令牌（pnpm 专属语法）
+      - name: Configure npm auth
+        run: echo "//registry.npmjs.org/:_authToken={NPM_TOKEN}" > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # 发布到 npm
       - run: pnpm publish --no-git-checks
