@@ -33,7 +33,7 @@ jobs:
       - run: pnpm install
 
       # 构建
-      - run: pnpm run build --if-present
+      - run: pnpm run build
 
       # 测试（如果有）
       - run: pnpm test
