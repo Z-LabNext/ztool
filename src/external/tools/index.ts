@@ -6,3 +6,4 @@ export * from './url';
 export * from './params';
 export * from './errorTrap';
 export * from './table';
+export * from './array';
