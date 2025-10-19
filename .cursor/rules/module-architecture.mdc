@@ -1,0 +1,246 @@
+---
+description: "模块架构和设计模式规范"
+---
+
+# 模块架构设计规范
+
+## 模块组织原则
+基于项目结构 [src/external/](mdc:src/external/) 的模块化设计：
+
+### 核心模块
+1. **merger模块**: 表格合并功能
+2. **tools模块**: 工具函数集合
+
+## 模块设计模式
+
+### 1. 入口文件模式
+每个模块必须有 `index.ts` 作为统一入口：
+```typescript
+// src/external/tools/index.ts
+export * from './option';
+export * from './string';
+export * from './file';
+// ... 其他工具模块
+```
+
+### 2. 类型分离模式
+```typescript
+// 类型定义独立文件
+types/
+├── merger.enums.ts      // 枚举类型
+├── merger.types.ts      // 接口类型
+└── merger.interfaces.ts // 复杂接口
+```
+
+### 3. 常量分离模式
+```typescript
+// 常量定义独立文件
+constants/
+└── merger.constants.ts  // 业务常量
+```
+
+### 4. 工具函数分离模式
+```typescript
+// 工具函数独立文件
+helpers/
+└── merger.helpers.ts    // 辅助函数
+```
+
+## 模块间依赖规范
+
+### 内部依赖
+```typescript
+// ✅ 推荐：模块内部使用相对路径
+import { Constants } from './constants/merger.constants';
+import { Helper } from './helpers/merger.helpers';
+```
+
+### 外部依赖
+```typescript
+// ✅ 推荐：跨模块使用绝对路径
+import { utils } from '@/utils';
+import { ColorTool } from '@/external/tools/color';
+```
+
+## API设计规范
+
+### 1. 类设计
+```typescript
+// ✅ 推荐：明确的类职责
+export class CellMerger {
+  private config: MergerConfig;
+  
+  constructor(config: MergerConfig) {
+    this.config = config;
+  }
+  
+  public merge(data: CellData[]): MergedResult {
+    // 实现逻辑
+  }
+}
+```
+
+### 2. 函数设计
+```typescript
+// ✅ 推荐：纯函数设计
+export function processString(input: string): ProcessedString {
+  // 无副作用的处理逻辑
+}
+
+// ✅ 推荐：高阶函数
+export function createProcessor<T>(
+  processor: (item: T) => T
+): (items: T[]) => T[] {
+  return items => items.map(processor);
+}
+```
+
+### 3. 类型设计
+```typescript
+// ✅ 推荐：明确的类型定义
+export interface MergerConfig {
+  mode: Mode;
+  options: MergerOptions;
+}
+
+export type MergerResult = 
+  | { success: true; data: MergedData }
+  | { success: false; error: string };
+```
+
+## 错误处理架构
+
+### 1. 错误类型层次
+```typescript
+// 基础错误类
+export class ZToolError extends Error {
+  constructor(message: string, public code: string) {
+    super(message);
+    this.name = 'ZToolError';
+  }
+}
+
+// 具体错误类型
+export class ValidationError extends ZToolError {
+  constructor(message: string, public field: string) {
+    super(message, 'VALIDATION_ERROR');
+  }
+}
+```
+
+### 2. 错误处理模式
+```typescript
+// ✅ 推荐：Result模式
+export type Result<T, E = ZToolError> = 
+  | { success: true; data: T }
+  | { success: false; error: E };
+
+export function safeProcess(input: unknown): Result<ProcessedData> {
+  try {
+    const result = process(input);
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: error as ZToolError };
+  }
+}
+```
+
+## 配置管理架构
+
+### 1. 配置接口设计
+```typescript
+export interface ToolConfig {
+  readonly version: string;
+  readonly environment: 'development' | 'production';
+  readonly features: FeatureFlags;
+}
+```
+
+### 2. 配置验证
+```typescript
+export function validateConfig(config: unknown): ToolConfig {
+  // 配置验证逻辑
+  if (!isValidConfig(config)) {
+    throw new ValidationError('Invalid configuration');
+  }
+  return config as ToolConfig;
+}
+```
+
+## 性能优化架构
+
+### 1. 懒加载模式
+```typescript
+// ✅ 推荐：按需加载模块
+export function getTool(toolName: string) {
+  switch (toolName) {
+    case 'color':
+      return import('./color').then(m => m.ColorTool);
+    case 'string':
+      return import('./string').then(m => m.StringTool);
+    default:
+      throw new Error(`Unknown tool: ${toolName}`);
+  }
+}
+```
+
+### 2. 缓存模式
+```typescript
+// ✅ 推荐：结果缓存
+class CachedProcessor {
+  private cache = new Map<string, any>();
+  
+  process(key: string, processor: () => any) {
+    if (this.cache.has(key)) {
+      return this.cache.get(key);
+    }
+    
+    const result = processor();
+    this.cache.set(key, result);
+    return result;
+  }
+}
+```
+
+## 测试架构
+
+### 1. 测试模块对应
+```
+src/external/merger/     → test/external/merger/
+src/external/tools/      → test/external/tools/
+```
+
+### 2. 测试工具函数
+```typescript
+// 测试工具函数
+export function createTestMerger(config?: Partial<MergerConfig>) {
+  return new CellMerger({
+    mode: Mode.MERGE,
+    options: {},
+    ...config
+  });
+}
+```
+
+## 文档架构
+
+### 1. 代码文档
+```typescript
+/**
+ * 单元格合并器
+ * @description 提供表格单元格合并功能
+ * @example
+ * ```typescript
+ * const merger = new CellMerger({ mode: Mode.MERGE });
+ * const result = merger.merge(cells);
+ * ```
+ */
+export class CellMerger {
+  // 实现
+}
+```
+
+### 2. 示例代码
+- 示例位于 `examples/` 目录
+- 提供完整的使用示例
+- 包含Web界面演示

@@ -1,0 +1,169 @@
+---
+globs: "*.test.ts,*.spec.ts"
+description: "测试编写规范和最佳实践"
+---
+
+# 测试编写规范
+
+## 测试框架配置
+- **测试框架**: Vitest
+- **测试环境**: jsdom (浏览器环境模拟)
+- **测试文件**: `*.test.ts` 或 `*.spec.ts`
+- **测试目录**: 与源码结构对应的 `test/` 目录
+
+## 测试文件组织
+```
+test/
+├── external/
+│   ├── merger/
+│   │   ├── cellMerger.test.ts
+│   │   └── shared.test.ts
+│   └── tools/
+│       ├── color.test.ts
+│       ├── errorTrap.test.ts
+│       └── ...
+```
+
+## 测试命名规范
+```typescript
+// ✅ 推荐：描述性测试名称
+describe('CellMerger', () => {
+  describe('merge方法', () => {
+    it('应该正确合并相邻的相同单元格', () => {
+      // 测试实现
+    });
+    
+    it('应该处理空数组情况', () => {
+      // 测试实现
+    });
+  });
+});
+```
+
+## 测试结构规范
+```typescript
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { CellMerger } from '@/external/merger';
+
+describe('模块名', () => {
+  // 测试设置
+  beforeEach(() => {
+    // 每个测试前的准备
+  });
+  
+  afterEach(() => {
+    // 每个测试后的清理
+  });
+  
+  describe('功能组', () => {
+    it('应该描述期望行为', () => {
+      // Arrange: 准备测试数据
+      const input = { /* 测试数据 */ };
+      
+      // Act: 执行被测试的功能
+      const result = functionUnderTest(input);
+      
+      // Assert: 验证结果
+      expect(result).toBe(expected);
+    });
+  });
+});
+```
+
+## 断言规范
+```typescript
+// ✅ 推荐：使用具体的断言
+expect(result).toBe(expected);           // 严格相等
+expect(result).toEqual(expected);        // 深度相等
+expect(result).toContain(item);          // 包含检查
+expect(result).toHaveLength(3);          // 长度检查
+expect(result).toBeInstanceOf(Error);    // 类型检查
+
+// ✅ 推荐：异步测试
+it('应该正确处理异步操作', async () => {
+  const result = await asyncFunction();
+  expect(result).toBeDefined();
+});
+
+// ✅ 推荐：错误测试
+it('应该抛出正确的错误', () => {
+  expect(() => {
+    functionThatShouldThrow();
+  }).toThrow('Expected error message');
+});
+```
+
+## 测试数据管理
+```typescript
+// ✅ 推荐：使用测试工厂函数
+function createTestData(overrides = {}) {
+  return {
+    id: 'test-id',
+    name: 'Test Name',
+    value: 42,
+    ...overrides
+  };
+}
+
+// ✅ 推荐：使用测试夹具
+const testFixtures = {
+  validInput: { /* 有效输入数据 */ },
+  invalidInput: { /* 无效输入数据 */ },
+  edgeCases: { /* 边界情况数据 */ }
+};
+```
+
+## 覆盖率要求
+- **函数覆盖率**: 100%
+- **分支覆盖率**: 90%+
+- **行覆盖率**: 90%+
+- **关键业务逻辑**: 100%覆盖
+
+## 测试类型规范
+```typescript
+// ✅ 单元测试：测试单个函数/方法
+describe('单个函数测试', () => {
+  it('应该返回正确结果', () => {
+    // 测试实现
+  });
+});
+
+// ✅ 集成测试：测试模块间交互
+describe('模块集成测试', () => {
+  it('应该正确处理模块间数据流', () => {
+    // 测试实现
+  });
+});
+
+// ✅ 边界测试：测试边界条件
+describe('边界条件测试', () => {
+  it('应该处理空输入', () => {
+    // 测试实现
+  });
+  
+  it('应该处理极大值', () => {
+    // 测试实现
+  });
+});
+```
+
+## 性能测试规范
+```typescript
+// ✅ 推荐：性能基准测试
+it('应该在合理时间内完成', () => {
+  const start = performance.now();
+  const result = heavyComputation();
+  const end = performance.now();
+  
+  expect(end - start).toBeLessThan(1000); // 1秒内完成
+  expect(result).toBeDefined();
+});
+```
+
+## 禁止事项
+- ❌ 测试名称不清晰
+- ❌ 测试依赖外部状态
+- ❌ 测试间相互依赖
+- ❌ 忽略异步操作
+- ❌ 不测试错误情况
+- ❌ 测试实现细节而非行为

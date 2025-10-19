@@ -1,0 +1,291 @@
+---
+description: "安全性和性能优化规范"
+---
+
+# 安全性和性能优化规范
+
+## 安全性规范
+
+### 1. 输入验证
+```typescript
+// ✅ 推荐：严格的输入验证
+export function validateInput(input: unknown): ValidatedInput {
+  if (typeof input !== 'string') {
+    throw new ValidationError('Input must be a string');
+  }
+  
+  if (input.length === 0) {
+    throw new ValidationError('Input cannot be empty');
+  }
+  
+  if (input.length > MAX_INPUT_LENGTH) {
+    throw new ValidationError('Input too long');
+  }
+  
+  return input as ValidatedInput;
+}
+```
+
+### 2. 数据清理
+```typescript
+// ✅ 推荐：清理用户输入
+export function sanitizeString(input: string): string {
+  return input
+    .trim()
+    .replace(/[<>]/g, '') // 移除潜在HTML标签
+    .replace(/javascript:/gi, '') // 移除JavaScript协议
+    .slice(0, MAX_LENGTH); // 限制长度
+}
+```
+
+### 3. 类型安全
+```typescript
+// ✅ 推荐：运行时类型检查
+export function isString(value: unknown): value is string {
+  return typeof value === 'string';
+}
+
+export function isNumber(value: unknown): value is number {
+  return typeof value === 'number' && !isNaN(value);
+}
+
+// ✅ 推荐：类型守卫函数
+export function isValidConfig(config: unknown): config is ToolConfig {
+  return (
+    typeof config === 'object' &&
+    config !== null &&
+    'version' in config &&
+    'environment' in config
+  );
+}
+```
+
+### 4. 错误信息安全
+```typescript
+// ✅ 推荐：不暴露内部信息
+export class SecureError extends Error {
+  constructor(publicMessage: string, private internalDetails?: string) {
+    super(publicMessage);
+    // 不在错误消息中暴露内部实现细节
+  }
+  
+  // 仅在开发环境记录详细信息
+  getInternalDetails(): string | undefined {
+    if (process.env.NODE_ENV === 'development') {
+      return this.internalDetails;
+    }
+    return undefined;
+  }
+}
+```
+
+## 性能优化规范
+
+### 1. 内存管理
+```typescript
+// ✅ 推荐：及时清理大对象
+export class DataProcessor {
+  private cache = new Map<string, any>();
+  private maxCacheSize = 1000;
+  
+  process(data: any[]): ProcessedData {
+    // 处理数据
+    const result = this.processData(data);
+    
+    // 清理缓存
+    if (this.cache.size > this.maxCacheSize) {
+      this.clearOldCache();
+    }
+    
+    return result;
+  }
+  
+  private clearOldCache(): void {
+    const entries = Array.from(this.cache.entries());
+    const toDelete = entries.slice(0, Math.floor(this.maxCacheSize / 2));
+    toDelete.forEach(([key]) => this.cache.delete(key));
+  }
+}
+```
+
+### 2. 异步处理优化
+```typescript
+// ✅ 推荐：批量处理
+export async function processBatch<T>(
+  items: T[],
+  processor: (item: T) => Promise<any>,
+  batchSize = 10
+): Promise<any[]> {
+  const results: any[] = [];
+  
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize);
+    const batchResults = await Promise.all(
+      batch.map(processor)
+    );
+    results.push(...batchResults);
+  }
+  
+  return results;
+}
+```
+
+### 3. 计算优化
+```typescript
+// ✅ 推荐：缓存计算结果
+export class OptimizedCalculator {
+  private memoCache = new Map<string, number>();
+  
+  calculate(input: string): number {
+    if (this.memoCache.has(input)) {
+      return this.memoCache.get(input)!;
+    }
+    
+    const result = this.performCalculation(input);
+    this.memoCache.set(input, result);
+    return result;
+  }
+  
+  private performCalculation(input: string): number {
+    // 复杂计算逻辑
+    return input.length * 42;
+  }
+}
+```
+
+### 4. 数据结构优化
+```typescript
+// ✅ 推荐：使用合适的数据结构
+export class EfficientLookup {
+  private index = new Map<string, Set<string>>();
+  
+  add(key: string, value: string): void {
+    if (!this.index.has(key)) {
+      this.index.set(key, new Set());
+    }
+    this.index.get(key)!.add(value);
+  }
+  
+  has(key: string, value: string): boolean {
+    return this.index.get(key)?.has(value) ?? false;
+  }
+  
+  // O(1) 查找复杂度
+  getValues(key: string): string[] {
+    return Array.from(this.index.get(key) ?? []);
+  }
+}
+```
+
+## 资源管理规范
+
+### 1. 文件处理
+```typescript
+// ✅ 推荐：安全的文件操作
+export async function safeFileOperation<T>(
+  filePath: string,
+  operation: (content: string) => T
+): Promise<T> {
+  try {
+    const content = await readFile(filePath, 'utf-8');
+    return operation(content);
+  } catch (error) {
+    throw new FileOperationError(`Failed to process file: ${filePath}`, error);
+  }
+}
+```
+
+### 2. 内存泄漏防护
+```typescript
+// ✅ 推荐：清理事件监听器
+export class EventManager {
+  private listeners = new Map<string, Function[]>();
+  
+  addListener(event: string, listener: Function): void {
+    if (!this.listeners.has(event)) {
+      this.listeners.set(event, []);
+    }
+    this.listeners.get(event)!.push(listener);
+  }
+  
+  removeListener(event: string, listener: Function): void {
+    const listeners = this.listeners.get(event);
+    if (listeners) {
+      const index = listeners.indexOf(listener);
+      if (index > -1) {
+        listeners.splice(index, 1);
+      }
+    }
+  }
+  
+  // 清理所有监听器
+  cleanup(): void {
+    this.listeners.clear();
+  }
+}
+```
+
+## 性能监控
+
+### 1. 性能指标
+```typescript
+// ✅ 推荐：性能监控装饰器
+export function measurePerformance(target: any, propertyName: string, descriptor: PropertyDescriptor) {
+  const method = descriptor.value;
+  
+  descriptor.value = function (...args: any[]) {
+    const start = performance.now();
+    const result = method.apply(this, args);
+    const end = performance.now();
+    
+    console.log(`${propertyName} took ${end - start} milliseconds`);
+    return result;
+  };
+}
+
+// 使用示例
+class DataProcessor {
+  @measurePerformance
+  processLargeDataset(data: any[]): any[] {
+    // 处理逻辑
+  }
+}
+```
+
+### 2. 内存使用监控
+```typescript
+// ✅ 推荐：内存使用检查
+export function checkMemoryUsage(): void {
+  if (process.memoryUsage) {
+    const usage = process.memoryUsage();
+    const heapUsedMB = Math.round(usage.heapUsed / 1024 / 1024);
+    
+    if (heapUsedMB > 100) { // 100MB阈值
+      console.warn(`High memory usage: ${heapUsedMB}MB`);
+    }
+  }
+}
+```
+
+## 安全最佳实践
+
+### 1. 输入验证清单
+- [ ] 验证数据类型
+- [ ] 检查字符串长度
+- [ ] 过滤危险字符
+- [ ] 验证数字范围
+- [ ] 检查数组大小
+
+### 2. 错误处理清单
+- [ ] 不暴露内部实现
+- [ ] 记录详细错误日志
+- [ ] 提供用户友好消息
+- [ ] 处理边界情况
+- [ ] 验证错误恢复
+
+### 3. 性能优化清单
+- [ ] 避免内存泄漏
+- [ ] 使用适当的数据结构
+- [ ] 实现结果缓存
+- [ ] 优化循环和递归
+- [ ] 监控资源使用

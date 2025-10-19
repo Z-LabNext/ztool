@@ -1,0 +1,92 @@
+---
+globs: "*.ts,*.tsx"
+description: "TypeScript编码规范和最佳实践"
+---
+
+# TypeScript 编码规范
+
+## 基础规范
+- **严格模式**: 启用所有TypeScript严格检查
+- **分号**: 必须使用分号结尾
+- **引号**: 优先使用单引号，字符串插值使用反引号
+- **缩进**: 使用2个空格缩进
+- **行尾**: 使用LF换行符
+
+## 类型定义规范
+```typescript
+// ✅ 推荐：使用interface定义对象结构
+interface UserConfig {
+  name: string;
+  age: number;
+  isActive?: boolean; // 可选属性
+}
+
+// ✅ 推荐：使用type定义联合类型
+type Status = 'pending' | 'success' | 'error';
+
+// ✅ 推荐：使用enum定义常量
+enum Mode {
+  MERGE = 'merge',
+  SPLIT = 'split'
+}
+```
+
+## 函数定义规范
+```typescript
+// ✅ 推荐：明确参数和返回值类型
+function processData(input: string[]): ProcessedData {
+  // 实现
+}
+
+// ✅ 推荐：使用泛型提高复用性
+function createArray<T>(items: T[]): T[] {
+  return [...items];
+}
+
+// ✅ 推荐：异步函数明确返回类型
+async function fetchData(url: string): Promise<ApiResponse> {
+  // 实现
+}
+```
+
+## 导入导出规范
+```typescript
+// ✅ 推荐：使用命名导出
+export { CellMerger } from './merger';
+export * from './types';
+
+// ✅ 推荐：使用类型导入
+import type { UserConfig } from './types';
+
+// ✅ 推荐：路径别名
+import { utils } from '@/utils';
+```
+
+## 错误处理规范
+```typescript
+// ✅ 推荐：使用Result模式
+type Result<T, E = Error> = 
+  | { success: true; data: T }
+  | { success: false; error: E };
+
+// ✅ 推荐：明确的错误类型
+class ValidationError extends Error {
+  constructor(message: string, public field: string) {
+    super(message);
+    this.name = 'ValidationError';
+  }
+}
+```
+
+## 模块组织规范
+- 每个模块必须有`index.ts`作为入口
+- 类型定义放在`types/`目录
+- 常量定义放在`constants/`目录
+- 工具函数放在`helpers/`目录
+
+## 禁止事项
+- ❌ 使用`any`类型（除非绝对必要）
+- ❌ 使用`@ts-ignore`（除非有充分理由）
+- ❌ 未处理的Promise
+- ❌ 隐式any类型
+- ❌ 未使用的导入

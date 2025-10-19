@@ -1,0 +1,328 @@
+---
+description: "开发工作流程和最佳实践"
+---
+
+# 开发工作流程规范
+
+## Git工作流规范
+
+### 分支策略
+```bash
+# 主分支
+main                    # 生产就绪代码
+develop                 # 开发集成分支
+
+# 功能分支
+feature/merger-enhancement    # 新功能开发
+feature/tools-optimization    # 工具优化
+feature/performance-improvement # 性能改进
+
+# 修复分支
+hotfix/critical-bug-fix       # 紧急修复
+bugfix/validation-error       # 常规修复
+
+# 发布分支
+release/v1.1.0               # 版本发布准备
+```
+
+### 提交信息规范
+```bash
+# 提交格式
+<type>(<scope>): <description>
+
+# 类型说明
+feat:     新功能
+fix:      修复bug
+docs:     文档更新
+style:    代码格式调整
+refactor: 代码重构
+test:     测试相关
+chore:    构建/工具相关
+
+# 示例
+feat(merger): 添加单元格合并功能
+fix(tools): 修复字符串处理bug
+docs(readme): 更新API文档
+test(merger): 添加合并器单元测试
+```
+
+## 开发环境设置
+
+### 1. 环境要求
+- Node.js >= 16.0.0
+- pnpm >= 8.0.0
+- TypeScript >= 4.5.0
+
+### 2. 项目初始化
+```bash
+# 克隆项目
+git clone <repository-url>
+cd ztool
+
+# 安装依赖
+pnpm install
+
+# 运行测试
+pnpm test
+
+# 启动开发服务器
+pnpm run mh:server
+```
+
+### 3. 开发工具配置
+```json
+// .vscode/settings.json
+{
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.suggest.autoImports": true
+}
+```
+
+## 代码开发流程
+
+### 1. 功能开发流程
+```bash
+# 1. 创建功能分支
+git checkout -b feature/new-feature
+
+# 2. 开发功能
+# - 编写代码
+# - 添加测试
+# - 更新文档
+
+# 3. 代码检查
+pnpm run prettier
+pnpm test
+
+# 4. 提交代码
+git add .
+git commit -m "feat(module): 添加新功能"
+
+# 5. 推送分支
+git push origin feature/new-feature
+
+# 6. 创建Pull Request
+```
+
+### 2. 代码审查流程
+```markdown
+## Pull Request 模板
+
+### 变更描述
+- [ ] 新功能
+- [ ] Bug修复
+- [ ] 性能优化
+- [ ] 文档更新
+
+### 测试检查
+- [ ] 单元测试通过
+- [ ] 集成测试通过
+- [ ] 手动测试完成
+
+### 代码质量
+- [ ] 代码格式化完成
+- [ ] 无TypeScript错误
+- [ ] 无ESLint警告
+- [ ] 代码审查通过
+```
+
+## 测试驱动开发 (TDD)
+
+### 1. TDD循环
+```typescript
+// 1. 红色阶段：编写失败的测试
+describe('新功能', () => {
+  it('应该实现预期行为', () => {
+    const result = newFeature();
+    expect(result).toBe(expected);
+  });
+});
+
+// 2. 绿色阶段：编写最小实现
+function newFeature() {
+  return expected; // 最小实现
+}
+
+// 3. 重构阶段：优化代码
+function newFeature() {
+  // 优化后的实现
+}
+```
+
+### 2. 测试覆盖率要求
+- 函数覆盖率：100%
+- 分支覆盖率：90%+
+- 行覆盖率：90%+
+
+## 持续集成流程
+
+### 1. 自动化检查
+```yaml
+# GitHub Actions 示例
+name: CI/CD Pipeline
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: pnpm install
+      - run: pnpm test
+      - run: pnpm run build
+```
+
+### 2. 质量门禁
+- 所有测试必须通过
+- 代码覆盖率达标
+- 无TypeScript错误
+- 无安全漏洞
+
+## 发布流程
+
+### 1. 版本管理
+```bash
+# 语义化版本控制
+major.minor.patch
+
+# 版本类型
+1.0.0  # 主版本：不兼容的API修改
+1.1.0  # 次版本：向下兼容的功能性新增
+1.1.1  # 修订版本：向下兼容的问题修正
+```
+
+### 2. 发布步骤
+```bash
+# 1. 更新版本号
+npm version patch|minor|major
+
+# 2. 构建项目
+pnpm run build
+
+# 3. 运行测试
+pnpm test
+
+# 4. 发布到npm
+npm publish
+
+# 5. 创建Git标签
+git tag v1.1.0
+git push origin v1.1.0
+```
+
+## 文档维护
+
+### 1. 代码文档
+```typescript
+/**
+ * 单元格合并器
+ * @description 提供表格单元格合并功能
+ * @example
+ * ```typescript
+ * const merger = new CellMerger({ mode: Mode.MERGE });
+ * const result = merger.merge(cells);
+ * ```
+ * @since 1.0.0
+ */
+export class CellMerger {
+  // 实现
+}
+```
+
+### 2. API文档
+- 使用JSDoc注释
+- 提供使用示例
+- 说明参数和返回值
+- 记录版本变更
+
+### 3. 变更日志
+```markdown
+# Changelog
+
+## [1.1.0] - 2024-01-15
+### Added
+- 新增单元格合并功能
+- 添加颜色工具函数
+
+### Changed
+- 优化字符串处理性能
+- 改进错误处理机制
+
+### Fixed
+- 修复文件读取bug
+- 解决类型定义问题
+```
+
+## 性能监控
+
+### 1. 性能基准
+```typescript
+// 性能测试
+describe('性能测试', () => {
+  it('应该在合理时间内完成', () => {
+    const start = performance.now();
+    const result = heavyOperation();
+    const end = performance.now();
+    
+    expect(end - start).toBeLessThan(1000); // 1秒内完成
+  });
+});
+```
+
+### 2. 内存监控
+```typescript
+// 内存使用检查
+function checkMemoryUsage() {
+  const usage = process.memoryUsage();
+  const heapUsedMB = Math.round(usage.heapUsed / 1024 / 1024);
+  
+  if (heapUsedMB > 100) {
+    console.warn(`High memory usage: ${heapUsedMB}MB`);
+  }
+}
+```
+
+## 故障排除
+
+### 1. 常见问题
+- TypeScript编译错误
+- 测试失败
+- 构建错误
+- 依赖冲突
+
+### 2. 调试技巧
+```typescript
+// 调试模式
+const DEBUG = process.env.NODE_ENV === 'development';
+
+if (DEBUG) {
+  console.log('Debug info:', debugData);
+}
+```
+
+### 3. 日志记录
+```typescript
+// 结构化日志
+interface LogEntry {
+  level: 'info' | 'warn' | 'error';
+  message: string;
+  timestamp: string;
+  context?: any;
+}
+
+function log(level: LogEntry['level'], message: string, context?: any) {
+  const entry: LogEntry = {
+    level,
+    message,
+    timestamp: new Date().toISOString(),
+    context
+  };
+  
+  console[level](JSON.stringify(entry));
+}
+```

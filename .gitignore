@@ -1,5 +1,18 @@
+# 构建
 dist
 node_modules
+
+# MCP
+.cunzhi-memory
+.promptx/backup
+.promptx/memory
+.promptx/.xml-upgrade-backup-done
+.promptx/pouch.json
+.promptx/resource/project.registry.json
+.shrimpData/WebGUI.md
+.shrimpData/tasks.json
+
+# 其他
 .vscode/*
 !.vscode/settings.json
 .DS_Store

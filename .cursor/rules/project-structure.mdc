@@ -1,0 +1,45 @@
+---
+alwaysApply: true
+description: "项目结构指南和开发规范"
+---
+
+# ZTool 项目结构指南
+
+## 项目概述
+这是一个TypeScript工具库项目，提供表格合并、工具函数等功能。
+
+## 核心文件结构
+- 主入口：[src/main.ts](mdc:src/main.ts) - 导出所有公共API
+- 构建配置：[vite.config.ts](mdc:vite.config.ts) - Vite构建配置
+- TypeScript配置：[tsconfig.json](mdc:tsconfig.json) - TS编译配置
+- 包配置：[package.json](mdc:package.json) - 项目依赖和脚本
+
+## 模块组织
+### 外部模块 (src/external/)
+- **merger模块**: 表格合并功能
+  - [src/external/merger/index.ts](mdc:src/external/merger/index.ts) - 合并器入口
+  - [src/external/merger/merger.ts](mdc:src/external/merger/merger.ts) - 核心合并逻辑
+  - [src/external/merger/types/](mdc:src/external/merger/types/) - 类型定义
+  - [src/external/merger/constants/](mdc:src/external/merger/constants/) - 常量定义
+
+- **tools模块**: 工具函数集合
+  - [src/external/tools/index.ts](mdc:src/external/tools/index.ts) - 工具函数入口
+  - 包含：color, errorTrap, file, option, params, string, table, url
+
+### 测试结构 (test/)
+- 测试文件与源码结构对应
+- 使用Vitest作为测试框架
+- 测试文件命名：`*.test.ts`
+
+## 开发规范
+1. **严格模式**: 启用TypeScript严格模式
+2. **路径别名**: 使用`@/*`指向`src/*`
+3. **代码风格**: 使用Prettier格式化
+4. **Git钩子**: 使用Husky + lint-staged
+5. **构建输出**: 同时支持ES模块和CommonJS
+
+## 重要约定
+- 所有公共API通过[src/main.ts](mdc:src/main.ts)导出
+- 模块内部使用相对路径导入
+- 外部使用绝对路径导入（@/）
+- 测试文件必须与源码文件结构保持一致
