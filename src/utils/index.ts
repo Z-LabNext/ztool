@@ -2,7 +2,7 @@
  * 打印警告
  */
 export function warn(msg: string): void {
-  console.warn(`[${__APP_NAME__} v${__APP_VERSION__}] ${msg}`);
+  console.warn(fmtErrorMsg(msg));
 }
 
 /**
