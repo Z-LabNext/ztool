@@ -42,11 +42,13 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # 调试步骤：验证令牌（运行后可删除）
+      # 增强调试
       - name: Debug npm auth
         run: |
-          pnpm whoami
-          echo "Token injected: $([ -n '${{ secrets.NPM_TOKEN }}' ] && echo 'Yes' || echo 'No')"
+          echo "Token length: ${#NPM_TOKEN}"  # 检查 token 是否非空
+          npm whoami || echo "whoami failed"
+          cat .npmrc  # 显示生成的 .npmrc
+          npm ping || echo "ping failed"  # 测试 registry 连接
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
