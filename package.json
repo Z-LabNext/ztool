@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
+    "lodash-es": "^4.17.21",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
     "lint-staged": "^15.4.3",
@@ -40,10 +41,9 @@
     "vitest": "^3.0.7"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
-    "lodash-es": "^4.17.21",
-    "rimraf": "^6.0.1",
-    "uuid": "^11.1.0"
+  },
+  "peerDependencies": {
+    "lodash-es": "^4.0.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
