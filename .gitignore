@@ -7,6 +7,12 @@ node_modules
 .shrimpData/WebGUI.md
 .shrimpData/tasks.json
 
+# Claude Code
+.claude/settings.local.json
+
+# Codegraph
+.codegraph/
+
 # 其他
 .DS_Store
 .idea
