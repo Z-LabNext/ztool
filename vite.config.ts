@@ -46,6 +46,7 @@ export default defineConfig(({ mode }) => {
         },
       },
       rollupOptions: {
+        external: ['lodash-es'],
         output: [
           {
             entryFileNames: fmtEntryFileNames(FORMAT_TYPE.es, name),
