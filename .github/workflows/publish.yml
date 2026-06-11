@@ -6,7 +6,6 @@ on:
       - 'v*'
 
 permissions:
-  id-token: write # Required for OIDC
   contents: read
 
 jobs:
@@ -36,23 +35,17 @@ jobs:
       # 测试
       - run: pnpm test
 
-      # 创建 .npmrc 文件注入 npm 令牌（pnpm 专属语法）
-      - name: Configure npm auth
-        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # 增强调试
+      # 调试：验证 npm 认证状态
       - name: Debug npm auth
         run: |
-          echo "Token length: ${#NPM_TOKEN}"
+          echo "NPM_TOKEN length: ${#NPM_TOKEN}"
           npm whoami || echo "whoami failed"
-          cat .npmrc  # 应显示实际 token 而非占位符
           npm ping || echo "ping failed"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # 发布到 npm
+      # 发布到 npm（pnpm 原生支持 NPM_TOKEN 环境变量）
       - run: pnpm publish --no-git-checks
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
