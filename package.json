@@ -52,7 +52,8 @@
     "url": "git+https://github.com/Z-LabNext/ztool.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/types/test"
   ],
   "volta": {
     "node": "22.20.0"
